@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="gym_background">#131B2E</color>
+
+    <color name="gym_card_background">#1E2638</color>
+
+    <color name="gym_blue">#2563EB</color>
+
+    <color name="gym_text_gray">#9CA3AF</color>
+
+    <color name="gym_surface_white">#F3F4F6</color>
+
+    <color name="gym_button_dark">#0F172A</color>
+</resources>
