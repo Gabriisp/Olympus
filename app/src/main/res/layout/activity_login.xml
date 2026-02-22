@@ -12,12 +12,12 @@
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:src="@drawable/ic_launcher_foreground"
+        android:tint="@color/gym_blue"
         android:contentDescription="Logo" />
-
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="OLYMPUS GYM"
+        android:text="@string/login_welcome"
         android:textColor="@color/white"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -26,7 +26,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Inicia sesión en tu cuenta"
+        android:text="@string/login_subtitle"
         android:textColor="@color/gym_text_gray"
         android:textSize="14sp" />
 
@@ -38,13 +38,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColorHint="@color/gym_text_gray"
+        app:boxStrokeColor="@color/gym_blue"
+        app:hintTextColor="@color/gym_blue"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Email"
+            android:hint="@string/email_label"
             android:inputType="textEmailAddress"
             android:textColor="@color/white" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -57,13 +59,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColorHint="@color/gym_text_gray"
+        app:boxStrokeColor="@color/gym_blue"
+        app:endIconMode="password_toggle"
+        app:endIconTint="@color/gym_text_gray"
+        app:hintTextColor="@color/gym_blue"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Contraseña"
+            android:hint="@string/password_label"
             android:inputType="textPassword"
             android:textColor="@color/white" />
     </com.google.android.material.textfield.TextInputLayout>
@@ -76,9 +82,22 @@
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="Iniciar Sesión"
-        android:backgroundTint="@color/gym_blue"
+        android:text="@string/btn_login"
         android:textColor="@color/white"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:background="@drawable/fondo_boton_xml" />
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="16dp" />
+
+    <!-- Botón Registrar -->
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnRegister"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Registrar"
+        android:textColor="@color/gym_blue"
+        android:textStyle="bold"
+        android:background="@android:color/transparent" />
 </LinearLayout>
