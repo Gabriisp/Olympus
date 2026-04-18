@@ -12,6 +12,7 @@ class SessionManager(context: Context) {
         private const val PREF_NAME = "OlympusSession"
         private const val KEY_IS_LOGGED_IN = "isLoggedIn"
         private const val KEY_USER_ID = "userId"
+        private const val KEY_USER_UID = "userUid"
         private const val KEY_USER_NAME = "userName"
         private const val KEY_USER_EMAIL = "userEmail"
         private const val KEY_USER_ROLE = "userRole"
@@ -22,15 +23,31 @@ class SessionManager(context: Context) {
         val editor = prefs.edit()
         editor.putBoolean(KEY_IS_LOGGED_IN, true)
         editor.putInt(KEY_USER_ID, user.id)
+        editor.putString(KEY_USER_UID, null)
         editor.putString(KEY_USER_NAME, user.name)
         editor.putString(KEY_USER_EMAIL, user.email)
         editor.putString(KEY_USER_ROLE, user.role)
         editor.apply()
     }
 
+    fun saveUserSession(profile: UserProfile) {
+        val editor = prefs.edit()
+        editor.putBoolean(KEY_IS_LOGGED_IN, true)
+        editor.putInt(KEY_USER_ID, profile.legacyLocalId)
+        editor.putString(KEY_USER_UID, profile.uid)
+        editor.putString(KEY_USER_NAME, profile.name)
+        editor.putString(KEY_USER_EMAIL, profile.email)
+        editor.putString(KEY_USER_ROLE, profile.role)
+        editor.apply()
+    }
+
     // Obtener el rol del usuario actual
     fun getUserRole(): String? {
         return prefs.getString(KEY_USER_ROLE, null)
+    }
+
+    fun getUserUid(): String? {
+        return prefs.getString(KEY_USER_UID, null)
     }
 
     // Verificar si el usuario está logueado
@@ -41,6 +58,10 @@ class SessionManager(context: Context) {
     // Obtener nombre del usuario
     fun getUserName(): String? {
         return prefs.getString(KEY_USER_NAME, null)
+    }
+
+    fun getUserEmail(): String? {
+        return prefs.getString(KEY_USER_EMAIL, null)
     }
 
     // Obtener ID del usuario

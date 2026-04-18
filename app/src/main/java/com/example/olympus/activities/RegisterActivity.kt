@@ -1,8 +1,6 @@
 package com.example.olympus
 
 import android.os.Bundle
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -10,43 +8,25 @@ import com.google.android.material.textfield.TextInputEditText
 
 class RegisterActivity : AppCompatActivity() {
 
-    private lateinit var dbHelper: DatabaseHelper
+    private val firebaseRepository = FirebaseRepository.instance
     private lateinit var etName: TextInputEditText
     private lateinit var etEmail: TextInputEditText
     private lateinit var etPassword: TextInputEditText
     private lateinit var etConfirmPassword: TextInputEditText
-    private lateinit var spinnerRole: AutoCompleteTextView
     private lateinit var btnRegister: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        // Inicializar base de datos
-        dbHelper = DatabaseHelper(this)
-
-        // Inicializar vistas
         etName = findViewById(R.id.etName)
         etEmail = findViewById(R.id.etEmail)
         etPassword = findViewById(R.id.etPassword)
         etConfirmPassword = findViewById(R.id.etConfirmPassword)
-        spinnerRole = findViewById(R.id.spinnerRole)
         btnRegister = findViewById(R.id.btnRegister)
 
-        // Configurar el spinner de roles
-        val roles = arrayOf("Usuario", "Entrenador", "Nutricionista")
-        val adapter = ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, roles)
-        spinnerRole.setAdapter(adapter)
-
-        // Botón de registro
-        btnRegister.setOnClickListener {
-            registerUser()
-        }
-
-        // Botón para volver al login
-        findViewById<Button>(R.id.btnBackToLogin).setOnClickListener {
-            finish()
-        }
+        btnRegister.setOnClickListener { registerUser() }
+        findViewById<Button>(R.id.btnBackToLogin).setOnClickListener { finish() }
     }
 
     private fun registerUser() {
@@ -54,9 +34,8 @@ class RegisterActivity : AppCompatActivity() {
         val email = etEmail.text.toString().trim()
         val password = etPassword.text.toString().trim()
         val confirmPassword = etConfirmPassword.text.toString().trim()
-        val role = spinnerRole.text.toString().trim()
+        val role = "Usuario"
 
-        // Validaciones
         if (name.isEmpty()) {
             etName.error = "Ingresa tu nombre"
             etName.requestFocus()
@@ -99,27 +78,48 @@ class RegisterActivity : AppCompatActivity() {
             return
         }
 
-        if (role.isEmpty()) {
-            Toast.makeText(this, "Selecciona un rol", Toast.LENGTH_SHORT).show()
-            spinnerRole.requestFocus()
-            return
-        }
+        btnRegister.isEnabled = false
 
-        // Verificar si el email ya existe
-        if (dbHelper.emailExists(email)) {
-            etEmail.error = "Este email ya está registrado"
-            etEmail.requestFocus()
-            return
-        }
+        firebaseRepository.registerAuthUser(email, password) { authResult ->
+            runOnUiThread {
+                authResult.onSuccess { uid ->
+                    val profile = UserProfile(
+                        uid = uid,
+                        legacyLocalId = -1,
+                        name = name,
+                        email = email,
+                        role = role
+                    )
 
-        // Registrar usuario
-        val success = dbHelper.registerUser(name, email, password, role)
-
-        if (success) {
-            Toast.makeText(this, "Registro exitoso. Por favor inicia sesión.", Toast.LENGTH_LONG).show()
-            finish()
-        } else {
-            Toast.makeText(this, "Error al registrar. Intenta de nuevo.", Toast.LENGTH_SHORT).show()
+                    firebaseRepository.saveUserProfile(profile) { profileResult ->
+                        runOnUiThread {
+                            btnRegister.isEnabled = true
+                            profileResult.onSuccess {
+                                firebaseRepository.signOut()
+                                Toast.makeText(
+                                    this,
+                                    "Registro completado. Ya puedes iniciar sesión.",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                                finish()
+                            }.onFailure { error ->
+                                Toast.makeText(
+                                    this,
+                                    error.message ?: "No se pudo guardar el perfil en la nube",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                        }
+                    }
+                }.onFailure { error ->
+                    btnRegister.isEnabled = true
+                    Toast.makeText(
+                        this,
+                        error.message ?: "No se pudo completar el registro",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
         }
     }
 }
