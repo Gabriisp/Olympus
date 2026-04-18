@@ -241,7 +241,8 @@ class RutinasDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABA
             null,
             "$COL_SERIE_RE_ID = ?",
             arrayOf(rutinaEjercicioId.toString()),
-            null, null, null
+            null, null,
+            "$COL_SERIE_ID ASC"
         )
         
         if (cursor.moveToFirst()) {
@@ -258,6 +259,87 @@ class RutinasDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABA
         cursor.close()
         db.close()
         return series
+    }
+
+    fun getStatsPorEjercicioDeRutina(rutinaId: Int): List<ExerciseProgressStat> {
+        return getEjerciciosDeRutina(rutinaId).map { ejercicio ->
+            val series = getSeriesDeEjercicio(ejercicio.id)
+            buildExerciseProgressStat(ejercicio.id, ejercicio.ejercicioNombre, series)
+        }
+    }
+
+    fun getResumenRutina(rutinaId: Int): RoutineProgressSummary {
+        val stats = getStatsPorEjercicioDeRutina(rutinaId)
+        return RoutineProgressSummary(
+            totalEjercicios = stats.size,
+            totalSeries = stats.sumOf { it.totalSeries },
+            totalVolumen = stats.sumOf { it.totalVolumen.toDouble() }.toFloat(),
+            ejercicioDestacado = stats.maxByOrNull { it.totalVolumen }?.ejercicioNombre ?: "Sin datos",
+            mejorTendencia = stats.maxByOrNull { it.tendenciaPeso }?.ejercicioNombre ?: "Sin datos"
+        )
+    }
+
+    fun getStatsGeneralesUsuario(userId: Int): List<ExerciseProgressStat> {
+        val groupedSeries = linkedMapOf<String, MutableList<Serie>>()
+        val groupedIds = linkedMapOf<String, Int>()
+
+        getRutinasPorUsuario(userId).forEach { rutina ->
+            getEjerciciosDeRutina(rutina.id).forEach { ejercicio ->
+                groupedIds.putIfAbsent(ejercicio.ejercicioNombre, ejercicio.id)
+                groupedSeries.getOrPut(ejercicio.ejercicioNombre) { mutableListOf() }
+                    .addAll(getSeriesDeEjercicio(ejercicio.id))
+            }
+        }
+
+        return groupedSeries.map { (nombre, series) ->
+            buildExerciseProgressStat(groupedIds[nombre] ?: -1, nombre, series)
+        }.sortedByDescending { it.totalVolumen }
+    }
+
+    fun getResumenGeneralUsuario(userId: Int): GeneralProgressSummary {
+        val rutinas = getRutinasPorUsuario(userId)
+        val stats = getStatsGeneralesUsuario(userId)
+        return GeneralProgressSummary(
+            totalRutinas = rutinas.size,
+            totalEjercicios = stats.size,
+            totalSeries = stats.sumOf { it.totalSeries },
+            totalVolumen = stats.sumOf { it.totalVolumen.toDouble() }.toFloat(),
+            ejercicioMasFuerte = stats.maxByOrNull { it.maxPeso }?.ejercicioNombre ?: "Sin datos",
+            ejercicioConMejorTendencia = stats.maxByOrNull { it.tendenciaPeso }?.ejercicioNombre
+                ?: "Sin datos"
+        )
+    }
+
+    private fun buildExerciseProgressStat(
+        rutinaEjercicioId: Int,
+        ejercicioNombre: String,
+        series: List<Serie>
+    ): ExerciseProgressStat {
+        val totalSeries = series.size
+        val maxPeso = series.maxOfOrNull { it.peso } ?: 0f
+        val promedioPeso = if (totalSeries > 0) series.map { it.peso }.average().toFloat() else 0f
+        val maxRepeticiones = series.maxOfOrNull { it.repeticiones } ?: 0
+        val totalRepeticiones = series.sumOf { it.repeticiones }
+        val totalVolumen = series.sumOf { (it.peso * it.repeticiones).toDouble() }.toFloat()
+        val tendenciaPeso = if (totalSeries >= 2) {
+            series.last().peso - series.first().peso
+        } else {
+            0f
+        }
+
+        return ExerciseProgressStat(
+            rutinaEjercicioId = rutinaEjercicioId,
+            ejercicioNombre = ejercicioNombre,
+            totalSeries = totalSeries,
+            promedioPeso = promedioPeso,
+            maxPeso = maxPeso,
+            maxRepeticiones = maxRepeticiones,
+            totalRepeticiones = totalRepeticiones,
+            totalVolumen = totalVolumen,
+            tendenciaPeso = tendenciaPeso,
+            pesosPorSerie = series.map { it.peso },
+            repsPorSerie = series.map { it.repeticiones }
+        )
     }
 
     // Eliminar rutina
@@ -292,6 +374,81 @@ class RutinasDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABA
         db.update(TABLE_RUTINAS, values, "$COL_RUTINA_ID = ?", arrayOf(rutinaId.toString()))
         db.close()
     }
+
+    fun reordenarEjercicio(rutinaEjercicioId: Int, moverArriba: Boolean) {
+        val db = this.writableDatabase
+
+        val currentCursor = db.query(
+            TABLE_RUTINA_EJERCICIOS,
+            arrayOf(COL_RE_RUTINA_ID, COL_RE_ORDEN),
+            "$COL_RE_ID = ?",
+            arrayOf(rutinaEjercicioId.toString()),
+            null, null, null
+        )
+
+        if (!currentCursor.moveToFirst()) {
+            currentCursor.close()
+            db.close()
+            return
+        }
+
+        val rutinaId = currentCursor.getInt(currentCursor.getColumnIndexOrThrow(COL_RE_RUTINA_ID))
+        val ordenActual = currentCursor.getInt(currentCursor.getColumnIndexOrThrow(COL_RE_ORDEN))
+        currentCursor.close()
+
+        val ordenObjetivo = if (moverArriba) ordenActual - 1 else ordenActual + 1
+        if (ordenObjetivo < 0) {
+            db.close()
+            return
+        }
+
+        val targetCursor = db.query(
+            TABLE_RUTINA_EJERCICIOS,
+            arrayOf(COL_RE_ID),
+            "$COL_RE_RUTINA_ID = ? AND $COL_RE_ORDEN = ?",
+            arrayOf(rutinaId.toString(), ordenObjetivo.toString()),
+            null, null, null
+        )
+
+        if (!targetCursor.moveToFirst()) {
+            targetCursor.close()
+            db.close()
+            return
+        }
+
+        val targetId = targetCursor.getInt(targetCursor.getColumnIndexOrThrow(COL_RE_ID))
+        targetCursor.close()
+
+        db.beginTransaction()
+        try {
+            db.update(
+                TABLE_RUTINA_EJERCICIOS,
+                ContentValues().apply { put(COL_RE_ORDEN, ordenObjetivo) },
+                "$COL_RE_ID = ?",
+                arrayOf(rutinaEjercicioId.toString())
+            )
+            db.update(
+                TABLE_RUTINA_EJERCICIOS,
+                ContentValues().apply { put(COL_RE_ORDEN, ordenActual) },
+                "$COL_RE_ID = ?",
+                arrayOf(targetId.toString())
+            )
+            db.setTransactionSuccessful()
+        } finally {
+            db.endTransaction()
+            db.close()
+        }
+    }
+
+    fun reemplazarEjercicio(rutinaEjercicioId: Int, ejercicioId: Int, ejercicioNombre: String) {
+        val db = this.writableDatabase
+        val values = ContentValues().apply {
+            put(COL_RE_EJERCICIO_ID, ejercicioId)
+            put(COL_RE_EJERCICIO_NOMBRE, ejercicioNombre)
+        }
+        db.update(TABLE_RUTINA_EJERCICIOS, values, "$COL_RE_ID = ?", arrayOf(rutinaEjercicioId.toString()))
+        db.close()
+    }
 }
 
 // Data classes
@@ -314,6 +471,37 @@ data class Serie(
     val rutinaEjercicioId: Int,
     val peso: Float,
     val repeticiones: Int
+)
+
+data class ExerciseProgressStat(
+    val rutinaEjercicioId: Int,
+    val ejercicioNombre: String,
+    val totalSeries: Int,
+    val promedioPeso: Float,
+    val maxPeso: Float,
+    val maxRepeticiones: Int,
+    val totalRepeticiones: Int,
+    val totalVolumen: Float,
+    val tendenciaPeso: Float,
+    val pesosPorSerie: List<Float>,
+    val repsPorSerie: List<Int>
+)
+
+data class RoutineProgressSummary(
+    val totalEjercicios: Int,
+    val totalSeries: Int,
+    val totalVolumen: Float,
+    val ejercicioDestacado: String,
+    val mejorTendencia: String
+)
+
+data class GeneralProgressSummary(
+    val totalRutinas: Int,
+    val totalEjercicios: Int,
+    val totalSeries: Int,
+    val totalVolumen: Float,
+    val ejercicioMasFuerte: String,
+    val ejercicioConMejorTendencia: String
 )
 
 // Clase para los ejercicios disponibles
