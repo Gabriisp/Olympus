@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "283417849200",
+    "project_id": "prueba-dfb57221",
+    "storage_bucket": "prueba-dfb57221.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:283417849200:android:0f73bd59482722c91333b5",
+        "android_client_info": {
+          "package_name": "com.example.olympus"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCoZqVi-tAhJIcb5DOvQgFquq-MEwStyNA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

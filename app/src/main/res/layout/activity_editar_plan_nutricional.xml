@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/gym_background"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tvTituloEditarPlan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Editar Plan"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="16dp"/>
+
+    <EditText
+        android:id="@+id/etNombrePlanEditar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Nombre del plan"
+        android:textColor="@color/white"
+        android:textColorHint="@color/gym_text_gray"
+        android:background="@color/gym_card_background"
+        android:padding="12dp"
+        android:layout_marginBottom="8dp"/>
+
+    <EditText
+        android:id="@+id/etDescripcionPlanEditar"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:hint="Descripción del plan..."
+        android:textColor="@color/white"
+        android:textColorHint="@color/gym_text_gray"
+        android:background="@color/gym_card_background"
+        android:padding="12dp"
+        android:gravity="top"
+        android:inputType="textMultiLine"
+        android:layout_marginBottom="8dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnActualizarPlan"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:text="Actualizar Plan"
+        android:textColor="@color/white"
+        android:textSize="13sp"
+        android:background="@drawable/fondo_boton_xml"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="🍽️ Comidas del Plan"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="12dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerComidasPlan"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+</LinearLayout>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:padding="8dp">
+
+    <TextView
+        android:id="@+id/tvSerie"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="Serie 1: 50kg x 10 reps"
+        android:textColor="@color/gym_text_gray"
+        android:textSize="14sp"/>
+
+    <ImageButton
+        android:id="@+id/btnEliminarSerie"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:src="@android:drawable/ic_delete"
+        android:tint="@color/gym_text_gray"
+        android:contentDescription="Eliminar serie"/>
+
+</LinearLayout>
