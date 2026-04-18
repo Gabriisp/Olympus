@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_mover_arriba"
+        android:title="Mover arriba" />
+    <item
+        android:id="@+id/action_mover_abajo"
+        android:title="Mover abajo" />
+    <item
+        android:id="@+id/action_reemplazar"
+        android:title="Reemplazar" />
+    <item
+        android:id="@+id/action_eliminar_ejercicio"
+        android:title="Eliminar" />
+</menu>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/gym_background"
+    android:padding="24dp">
+
+    <TextView
+        android:id="@+id/tvTituloCrearPlan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nuevo Plan Nutricional"
+        android:textColor="@color/white"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="24dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nombre del plan"
+        android:textColor="@color/gym_text_gray"
+        android:textSize="14sp"
+        android:layout_marginBottom="8dp"/>
+
+    <EditText
+        android:id="@+id/etNombrePlan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Ej: Plan de pérdida de peso"
+        android:textColor="@color/white"
+        android:textColorHint="@color/gym_text_gray"
+        android:background="@color/gym_card_background"
+        android:padding="14dp"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Descripción (opcional)"
+        android:textColor="@color/gym_text_gray"
+        android:textSize="14sp"
+        android:layout_marginBottom="8dp"/>
+
+    <EditText
+        android:id="@+id/etDescripcionPlan"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:hint="Descripción del plan nutricional..."
+        android:textColor="@color/white"
+        android:textColorHint="@color/gym_text_gray"
+        android:background="@color/gym_card_background"
+        android:padding="14dp"
+        android:gravity="top"
+        android:inputType="textMultiLine"
+        android:layout_marginBottom="24dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnGuardarPlan"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Crear Plan y Añadir Comidas"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:background="@drawable/fondo_boton_xml"/>
+
+</LinearLayout>

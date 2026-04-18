@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.Olympus">
+
+        <activity android:name=".LoginActivity" android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".RegisterActivity" android:exported="false" />
+        <activity android:name=".RoleRequestActivity" android:exported="false" />
+        <activity android:name=".ChangePasswordActivity" android:exported="false" />
+        <activity android:name=".AvailableProfessionalsActivity" android:exported="false" />
+        <activity android:name=".HomeActivity" android:exported="false" />
+        <activity android:name=".EntrenadorActivity" android:exported="false" />
+        <activity android:name=".NutricionistaActivity" android:exported="false" />
+        <activity android:name=".CrearRutinaActivity" android:exported="false" />
+        <activity android:name=".CrearRutinaEntrenadorActivity" android:exported="false" />
+        <activity android:name=".EditarRutinaEntrenadorActivity" android:exported="false" />
+        <activity android:name=".SeleccionarEjercicioActivity" android:exported="false" />
+        <activity android:name=".ReemplazarEjercicioActivity" android:exported="false" />
+        <activity android:name=".TiendaActivity" android:exported="false" />
+        <activity android:name=".DetalleUsuarioActivity" android:exported="false" />
+        <activity android:name=".EstadisticasRutinaActivity" android:exported="false" />
+        <activity android:name=".MainActivity" android:exported="false" />
+
+        <!-- Nutricionista activities -->
+        <activity android:name=".DetalleUsuarioNutricionistaActivity" android:exported="false" />
+        <activity android:name=".CrearPlanNutricionalActivity" android:exported="false" />
+        <activity android:name=".EditarPlanNutricionalActivity" android:exported="false" />
+        <activity android:name=".SeleccionarComidaActivity" android:exported="false" />
+    </application>
+
+</manifest>
