@@ -1,5 +1,6 @@
 package com.example.olympus
 
+// Adapter para mostrar una lista de usuarios
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

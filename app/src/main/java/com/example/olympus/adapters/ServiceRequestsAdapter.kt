@@ -1,5 +1,6 @@
 package com.example.olympus
 
+// Adapter para mostrar solicitudes de servicio de profesionales
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,6 +42,7 @@ class ServiceRequestsAdapter(
 
     override fun getItemCount(): Int = requests.size
 
+    // Actualiza la lista de solicitudes de servicio
     fun updateRequests(newRequests: List<ServiceRequest>) {
         requests = newRequests
         notifyDataSetChanged()
