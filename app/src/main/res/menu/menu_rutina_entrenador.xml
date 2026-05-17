@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/action_editar_rutina"
+        android:title="Ver y editar" />
+    <item
+        android:id="@+id/action_ver_estadisticas"
+        android:title="Ver estadísticas" />
+    <item
+        android:id="@+id/action_eliminar_rutina"
+        android:title="Eliminar rutina" />
+</menu>

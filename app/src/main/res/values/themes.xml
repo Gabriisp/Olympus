@@ -1,0 +1,79 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <style name="Base.Theme.Olympus" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/gym_primary</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/gym_cyan</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="android:colorBackground">@color/gym_background</item>
+        <item name="colorSurface">@color/gym_card_background</item>
+        <item name="colorOnSurface">@color/gym_text_primary</item>
+        <item name="android:statusBarColor">@color/gym_background</item>
+        <item name="android:navigationBarColor">@color/gym_background</item>
+    </style>
+
+    <style name="Theme.Olympus" parent="Base.Theme.Olympus" />
+
+    <!-- Dialog Theme -->
+    <style name="Theme.Olympus.Dialog" parent="Theme.Material3.DayNight.Dialog.Alert">
+        <item name="colorPrimary">@color/gym_primary</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSurface">@color/gym_card_background</item>
+        <item name="colorOnSurface">@color/white</item>
+        <item name="android:background">@color/gym_card_background</item>
+        <item name="android:textColorPrimary">@color/gym_blue</item>
+    </style>
+
+    <!-- Botón Primary con gradiente -->
+    <style name="Widget.Olympus.Button.Primary" parent="Widget.Material3.Button">
+        <item name="android:background">@drawable/bg_button_primary</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:paddingStart">20dp</item>
+        <item name="android:paddingEnd">20dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+    </style>
+
+    <!-- Botón Secondary -->
+    <style name="Widget.Olympus.Button.Secondary" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:background">@drawable/bg_button_secondary</item>
+        <item name="android:textColor">@color/gym_primary</item>
+        <item name="android:textSize">14sp</item>
+        <item name="strokeColor">@color/gym_primary</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+
+    <!-- Card Style -->
+    <style name="Widget.Olympus.Card" parent="Widget.Material3.CardView.Filled">
+        <item name="cardBackgroundColor">@color/gym_card_background</item>
+        <item name="cardCornerRadius">16dp</item>
+        <item name="cardElevation">0dp</item>
+        <item name="strokeColor">@color/gym_card_border</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+
+    <!-- Text Styles -->
+    <style name="TextAppearance.Olympus.Title" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textColor">@color/gym_text_primary</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:fontFamily">sans-serif-bold</item>
+    </style>
+
+    <style name="TextAppearance.Olympus.Subtitle" parent="TextAppearance.Material3.TitleMedium">
+        <item name="android:textColor">@color/gym_text_secondary</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextAppearance.Olympus.Body" parent="TextAppearance.Material3.BodyMedium">
+        <item name="android:textColor">@color/gym_text_primary</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TextAppearance.Olympus.Caption" parent="TextAppearance.Material3.BodySmall">
+        <item name="android:textColor">@color/gym_text_muted</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+</resources>

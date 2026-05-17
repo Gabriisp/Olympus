@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gym_background"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Header con gradiente sutil -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/bg_card"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Mis Rutinas"
+            android:textColor="@color/gym_text_primary"
+            android:textSize="22sp"
+            android:textStyle="bold"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnNuevaRutina"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_button_primary"
+            android:paddingStart="18dp"
+            android:paddingEnd="18dp"
+            android:text="+ Nueva"
+            android:textColor="@color/white"
+            android:textSize="13sp"
+            android:textAllCaps="false"/>
+    </LinearLayout>
+
+    <!-- Filtro día de la semana -->
+    <RadioGroup
+        android:id="@+id/rgFiltroDias"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <RadioButton
+            android:id="@+id/rbTodos"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="*"
+            android:textSize="14sp"
+            android:textColor="@color/gym_text_primary"
+            android:button="@null"
+            android:background="@drawable/bg_dia_semana_selector"
+            android:gravity="center"
+            android:layout_margin="2dp"/>
+
+        <RadioButton
+            android:id="@+id/rbLunes"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="L"
+            android:textSize="14sp"
+            android:textColor="@color/gym_text_primary"
+            android:button="@null"
+            android:background="@drawable/bg_dia_semana_selector"
+            android:gravity="center"
+            android:layout_margin="2dp"/>
+
+        <RadioButton
+            android:id="@+id/rbMartes"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="M"
+            android:textSize="14sp"
+            android:textColor="@color/gym_text_primary"
+            android:button="@null"
+            android:background="@drawable/bg_dia_semana_selector"
+            android:gravity="center"
+            android:layout_margin="2dp"/>
+
+        <RadioButton
+            android:id="@+id/rbMiercoles"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="X"
+            android:textSize="14sp"
+            android:textColor="@color/gym_text_primary"
+            android:button="@null"
+            android:background="@drawable/bg_dia_semana_selector"
+            android:gravity="center"
+            android:layout_margin="2dp"/>
+
+        <RadioButton
+            android:id="@+id/rbJueves"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="J"
+            android:textSize="14sp"
+            android:textColor="@color/gym_text_primary"
+            android:button="@null"
+            android:background="@drawable/bg_dia_semana_selector"
+            android:gravity="center"
+            android:layout_margin="2dp"/>
+
+        <RadioButton
+            android:id="@+id/rbViernes"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="V"
+            android:textSize="14sp"
+            android:textColor="@color/gym_text_primary"
+            android:button="@null"
+            android:background="@drawable/bg_dia_semana_selector"
+            android:gravity="center"
+            android:layout_margin="2dp"/>
+
+        <RadioButton
+            android:id="@+id/rbSabado"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="S"
+            android:textSize="14sp"
+            android:textColor="@color/gym_text_primary"
+            android:button="@null"
+            android:background="@drawable/bg_dia_semana_selector"
+            android:gravity="center"
+            android:layout_margin="2dp"/>
+
+        <RadioButton
+            android:id="@+id/rbDomingo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="D"
+            android:textSize="14sp"
+            android:textColor="@color/gym_text_primary"
+            android:button="@null"
+            android:background="@drawable/bg_dia_semana_selector"
+            android:gravity="center"
+            android:layout_margin="2dp"/>
+
+    </RadioGroup>
+
+    <!-- RecyclerView para mostrar rutinas -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerRutinas"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingBottom="80dp"/>
+
+</LinearLayout>
