@@ -1,5 +1,7 @@
 package com.example.olympus
 
+// Activity de entrada que aplica edge-to-edge display y delega a LoginActivity
+
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
