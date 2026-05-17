@@ -1,5 +1,6 @@
 package com.example.olympus
 
+// Adapter para mostrar notas guardadas en la nube
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 
 class CloudNotasAdapter(
     private val notas: List<CloudNote>,
-    private val onEliminarNota: (String) -> Unit
+    private val onEliminarNota: (String) -> Unit,
+    private val onEditarNota: (CloudNote) -> Unit
 ) : RecyclerView.Adapter<CloudNotasAdapter.NotaViewHolder>() {
 
     inner class NotaViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -28,6 +30,11 @@ class CloudNotasAdapter(
         val nota = notas[position]
         holder.tvTitulo.text = nota.titulo
         holder.tvContenido.text = nota.contenido
+
+        holder.itemView.setOnClickListener {
+            onEditarNota(nota)
+        }
+
         holder.btnEliminar.setOnClickListener {
             onEliminarNota(nota.id)
         }

@@ -1,5 +1,10 @@
 package com.example.olympus
 
+// Adapter para mostrar ejercicios de una rutina guardada en la nube
+import android.graphics.Color
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +22,8 @@ class CloudRutinaEjerciciosAdapter(
     private val onAgregarSerie: (String) -> Unit,
     private val onEliminarEjercicio: (String) -> Unit,
     private val onReordenar: (String, Boolean) -> Unit,
-    private val onReemplazar: (String) -> Unit
+    private val onReemplazar: (String) -> Unit,
+    private val onEditarSerie: (String, String, CloudRoutineSet) -> Unit
 ) : RecyclerView.Adapter<CloudRutinaEjerciciosAdapter.EjercicioViewHolder>() {
 
     inner class EjercicioViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -44,6 +50,12 @@ class CloudRutinaEjerciciosAdapter(
         holder.btnMenuEjercicio.setOnClickListener {
             val popup = PopupMenu(holder.itemView.context, holder.btnMenuEjercicio)
             popup.inflate(R.menu.menu_ejercicio_rutina)
+
+            for (i in 0 until popup.menu.size()) {
+                popup.menu.getItem(i).title = SpannableStringBuilder(popup.menu.getItem(i).title.toString()).apply {
+                    setSpan(ForegroundColorSpan(Color.WHITE), 0, length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                }
+            }
 
             popup.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
@@ -77,17 +89,24 @@ class CloudRutinaEjerciciosAdapter(
         firebaseRepository.getSetsOfExercise(routineId, ejercicio.id) { result ->
             holder.itemView.post {
                 val series = result.getOrDefault(emptyList())
-                holder.recyclerSeries.adapter = CloudSeriesAdapter(series) { setId ->
-                    firebaseRepository.deleteSet(routineId, ejercicio.id, setId) {
-                        holder.itemView.post { notifyItemChanged(position) }
+                holder.recyclerSeries.adapter = CloudSeriesAdapter(
+                    series = series,
+                    onEliminarSerie = { setId ->
+                        firebaseRepository.deleteSet(routineId, ejercicio.id, setId) {
+                            holder.itemView.post { notifyItemChanged(position) }
+                        }
+                    },
+                    onEditarSerie = { set ->
+                        onEditarSerie(routineId, ejercicio.id, set)
                     }
-                }
+                )
             }
         }
     }
 
     override fun getItemCount() = ejercicios.size
 
+    // Actualiza la lista de ejercicios y refresca la vista
     fun updateEjercicios(newList: List<CloudRoutineExercise>) {
         ejercicios = newList
         notifyDataSetChanged()
