@@ -1,5 +1,6 @@
 package com.example.olympus
 
+// Adapter para mostrar los planes nutricionales asignados al usuario
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -75,6 +76,7 @@ class PlanesUsuarioAdapter(
 
     override fun getItemCount() = planes.size
 
+    // Construye los slots de comida para mostrar en el plan
     private fun buildSlots(holder: PlanViewHolder, comidas: List<CloudComidaPlan>) {
         holder.layoutComidas.removeAllViews()
 
@@ -83,8 +85,7 @@ class PlanesUsuarioAdapter(
             val slotView = LayoutInflater.from(holder.itemView.context)
                 .inflate(R.layout.item_comida_usuario, holder.layoutComidas, false)
 
-            val emoji = ComidaData.EMOJIS_TIPO[tipo] ?: ""
-            slotView.findViewById<TextView>(R.id.tvTipoComidaUsuario).text = "$emoji $tipo"
+            slotView.findViewById<TextView>(R.id.tvTipoComidaUsuario).text = tipo
 
             val ivImagen = slotView.findViewById<ImageView>(R.id.ivComidaUsuarioImagen)
             val tvNombre = slotView.findViewById<TextView>(R.id.tvNombreComidaUsuario)
@@ -99,7 +100,7 @@ class PlanesUsuarioAdapter(
                 tvCal.visibility = View.VISIBLE
                 tvVacio.visibility = View.GONE
 
-                ivImagen.setImageResource(android.R.drawable.ic_menu_gallery)
+                ivImagen.setImageResource(ComidaData.getDrawableResId(comida.imagenId))
                 tvNombre.text = comida.nombre
                 tvDesc.text = comida.descripcion
                 tvCal.text = "${comida.calorias} kcal"
