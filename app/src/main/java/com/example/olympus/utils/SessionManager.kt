@@ -1,11 +1,16 @@
-package com.example.olympus
+package com.example.olympus.utils
+
+// Gestor de sesion de usuario usando SharedPreferences
+// Almacena datos del usuario autenticado para acceso rapido en toda la app
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.example.olympus.UserProfile
 
 class SessionManager(context: Context) {
-    
-    private val prefs: SharedPreferences = 
+
+    // SharedPreferences para persistir datos de sesion
+    private val prefs: SharedPreferences =
         context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
 
     companion object {
@@ -15,21 +20,10 @@ class SessionManager(context: Context) {
         private const val KEY_USER_UID = "userUid"
         private const val KEY_USER_NAME = "userName"
         private const val KEY_USER_EMAIL = "userEmail"
-        private const val KEY_USER_ROLE = "userRole"
+private const val KEY_USER_ROLE = "userRole"
     }
 
-    // Guardar sesión de usuario
-    fun saveUserSession(user: User) {
-        val editor = prefs.edit()
-        editor.putBoolean(KEY_IS_LOGGED_IN, true)
-        editor.putInt(KEY_USER_ID, user.id)
-        editor.putString(KEY_USER_UID, null)
-        editor.putString(KEY_USER_NAME, user.name)
-        editor.putString(KEY_USER_EMAIL, user.email)
-        editor.putString(KEY_USER_ROLE, user.role)
-        editor.apply()
-    }
-
+    // Guarda todos los datos del perfil de usuario en SharedPreferences
     fun saveUserSession(profile: UserProfile) {
         val editor = prefs.edit()
         editor.putBoolean(KEY_IS_LOGGED_IN, true)
@@ -41,35 +35,37 @@ class SessionManager(context: Context) {
         editor.apply()
     }
 
-    // Obtener el rol del usuario actual
+    // Obtiene el rol del usuario actual
     fun getUserRole(): String? {
         return prefs.getString(KEY_USER_ROLE, null)
     }
 
+    // Obtiene el UID de Firebase del usuario actual
     fun getUserUid(): String? {
         return prefs.getString(KEY_USER_UID, null)
     }
 
-    // Verificar si el usuario está logueado
+    // Verifica si el usuario esta logueado
     fun isLoggedIn(): Boolean {
         return prefs.getBoolean(KEY_IS_LOGGED_IN, false)
     }
 
-    // Obtener nombre del usuario
+    // Obtiene el nombre del usuario actual
     fun getUserName(): String? {
         return prefs.getString(KEY_USER_NAME, null)
     }
 
+    // Obtiene el email del usuario actual
     fun getUserEmail(): String? {
         return prefs.getString(KEY_USER_EMAIL, null)
     }
 
-    // Obtener ID del usuario
+    // Obtiene el ID local del usuario (legacy, puede ser -1 para usuarios nuevos)
     fun getUserId(): Int {
         return prefs.getInt(KEY_USER_ID, -1)
     }
 
-    // Cerrar sesión
+    // Cierra la sesion limpiando todos los datos guardados
     fun logout() {
         val editor = prefs.edit()
         editor.clear()

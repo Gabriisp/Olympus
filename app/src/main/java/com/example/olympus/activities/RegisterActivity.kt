@@ -1,5 +1,8 @@
 package com.example.olympus
 
+// Pantalla de registro de nuevo usuario
+// Crea cuenta en Firebase Auth y guarda perfil en Firestore con rol "Usuario" por defecto
+
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
@@ -29,6 +32,7 @@ class RegisterActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btnBackToLogin).setOnClickListener { finish() }
     }
 
+    // Registra un nuevo usuario en Firebase Auth y guarda su perfil
     private fun registerUser() {
         val name = etName.text.toString().trim()
         val email = etEmail.text.toString().trim()
@@ -49,13 +53,13 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            etEmail.error = "Ingresa un email válido"
+            etEmail.error = "Ingresa un email valido"
             etEmail.requestFocus()
             return
         }
 
         if (password.isEmpty()) {
-            etPassword.error = "Ingresa tu contraseña"
+            etPassword.error = "Ingresa tu contrasena"
             etPassword.requestFocus()
             return
         }
@@ -96,28 +100,16 @@ class RegisterActivity : AppCompatActivity() {
                             btnRegister.isEnabled = true
                             profileResult.onSuccess {
                                 firebaseRepository.signOut()
-                                Toast.makeText(
-                                    this,
-                                    "Registro completado. Ya puedes iniciar sesión.",
-                                    Toast.LENGTH_LONG
-                                ).show()
+                                showToast("Registro completado. Ya puedes iniciar sesion.", Toast.LENGTH_LONG)
                                 finish()
                             }.onFailure { error ->
-                                Toast.makeText(
-                                    this,
-                                    error.message ?: "No se pudo guardar el perfil en la nube",
-                                    Toast.LENGTH_LONG
-                                ).show()
+                                showToast(error.message ?: "No se pudo guardar el perfil en la nube", Toast.LENGTH_LONG)
                             }
                         }
                     }
                 }.onFailure { error ->
                     btnRegister.isEnabled = true
-                    Toast.makeText(
-                        this,
-                        error.message ?: "No se pudo completar el registro",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    showToast(error.message ?: "No se pudo completar el registro", Toast.LENGTH_LONG)
                 }
             }
         }
