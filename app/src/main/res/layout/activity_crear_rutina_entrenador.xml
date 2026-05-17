@@ -24,7 +24,7 @@
         android:textColorHint="@color/gym_text_gray"
         app:boxStrokeColor="@color/gym_blue"
         app:hintTextColor="@color/gym_blue"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="24dp"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -35,6 +35,100 @@
             android:inputType="text"
             android:textColor="@color/white" />
     </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:id="@+id/llDiasSemana"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <CheckBox
+            android:id="@+id/cbLunes"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="L"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:button="@null"
+            android:background="@drawable/bg_dia_semana_selector"
+            android:gravity="center"
+            android:layout_margin="2dp"/>
+
+        <CheckBox
+            android:id="@+id/cbMartes"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="M"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:button="@null"
+            android:background="@drawable/bg_dia_semana_selector"
+            android:gravity="center"
+            android:layout_margin="2dp"/>
+
+        <CheckBox
+            android:id="@+id/cbMiercoles"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="X"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:button="@null"
+            android:background="@drawable/bg_dia_semana_selector"
+            android:gravity="center"
+            android:layout_margin="2dp"/>
+
+        <CheckBox
+            android:id="@+id/cbJueves"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="J"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:button="@null"
+            android:background="@drawable/bg_dia_semana_selector"
+            android:gravity="center"
+            android:layout_margin="2dp"/>
+
+        <CheckBox
+            android:id="@+id/cbViernes"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="V"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:button="@null"
+            android:background="@drawable/bg_dia_semana_selector"
+            android:gravity="center"
+            android:layout_margin="2dp"/>
+
+        <CheckBox
+            android:id="@+id/cbSabado"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="S"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:button="@null"
+            android:background="@drawable/bg_dia_semana_selector"
+            android:gravity="center"
+            android:layout_margin="2dp"/>
+
+        <CheckBox
+            android:id="@+id/cbDomingo"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="D"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:button="@null"
+            android:background="@drawable/bg_dia_semana_selector"
+            android:gravity="center"
+            android:layout_margin="2dp"/>
+
+    </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnGuardarRutinaEntrenador"

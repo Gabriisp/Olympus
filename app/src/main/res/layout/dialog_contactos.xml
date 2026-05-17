@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/gym_background"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:text="Contactos"
+        android:textColor="@color/gym_text_primary"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <!-- Contacto 1: Jaime -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:orientation="vertical"
+        android:background="@drawable/bg_card"
+        android:padding="12dp">
+
+        <TextView
+            android:id="@+id/tvNombre1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Jaime de Luengo"
+            android:textColor="@color/gym_text_primary"
+            android:textSize="14sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tvCorreo1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Correo"
+            android:textColor="@color/gym_text_secondary"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:id="@+id/tvEmail1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="jaime.de.luengo.al@iespoligonosur.org"
+            android:textColor="@color/gym_primary"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:id="@+id/tvInstagram1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Instagram "
+            android:textColor="@color/gym_text_secondary"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:id="@+id/tvInstagramUser1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="jaimeeesantoss"
+            android:textColor="@color/gym_cyan"
+            android:textSize="12sp"/>
+    </LinearLayout>
+
+    <!-- Contacto 2: Gabriel -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/bg_card"
+        android:padding="12dp">
+
+        <TextView
+            android:id="@+id/tvNombre2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gabriel Santos"
+            android:textColor="@color/gym_text_primary"
+            android:textSize="14sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/tvCorreo2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Correo"
+            android:textColor="@color/gym_text_secondary"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:id="@+id/tvEmail2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="gabriel.santos.palomino.al@iespoligonosur.org"
+            android:textColor="@color/gym_primary"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:id="@+id/tvInstagram2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Instagram "
+            android:textColor="@color/gym_text_secondary"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:id="@+id/tvInstagramUser2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="gabriel_angelsp"
+            android:textColor="@color/gym_cyan"
+            android:textSize="12sp"/>
+    </LinearLayout>
+
+</LinearLayout>

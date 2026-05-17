@@ -483,8 +483,9 @@ data class ExerciseProgressStat(
     val totalRepeticiones: Int,
     val totalVolumen: Float,
     val tendenciaPeso: Float,
-    val pesosPorSerie: List<Float>,
-    val repsPorSerie: List<Int>
+    val pesosPorSerie: List<Float>,      // evolución de maxPeso por momento histórico
+    val repsPorSerie: List<Int>,
+    val evolucionVolumen: List<Float> = emptyList() // evolución de volumen total por momento histórico
 )
 
 data class RoutineProgressSummary(
