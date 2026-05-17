@@ -1,5 +1,6 @@
 package com.example.olympus
 
+// Activity para seleccionar y agregar una comida a un plan nutricional
 import android.os.Bundle
 import android.widget.TextView
 import android.widget.Toast
@@ -25,8 +26,7 @@ class SeleccionarComidaActivity : AppCompatActivity() {
         tvTituloSeleccion = findViewById(R.id.tvTituloSeleccionComida)
         recyclerComidas = findViewById(R.id.recyclerComidasDisponibles)
 
-        val emoji = ComidaData.EMOJIS_TIPO[tipoComida] ?: ""
-        tvTituloSeleccion.text = "Selecciona $emoji $tipoComida"
+        tvTituloSeleccion.text = "Selecciona $tipoComida"
 
         recyclerComidas.layoutManager = GridLayoutManager(this, 2)
 
@@ -51,18 +51,10 @@ class SeleccionarComidaActivity : AppCompatActivity() {
             ) { result ->
                 runOnUiThread {
                     result.onSuccess {
-                        Toast.makeText(
-                            this,
-                            "${comidaDisponible.nombre} añadido al $tipoComida",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        showToast("${comidaDisponible.nombre} añadido al $tipoComida")
                         finish()
                     }.onFailure { error ->
-                        Toast.makeText(
-                            this,
-                            error.message ?: "No se pudo añadir la comida",
-                            Toast.LENGTH_LONG
-                        ).show()
+                        showToast(error.message ?: "No se pudo añadir la comida", Toast.LENGTH_LONG)
                     }
                 }
             }

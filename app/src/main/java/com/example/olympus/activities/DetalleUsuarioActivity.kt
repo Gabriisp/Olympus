@@ -1,6 +1,8 @@
 package com.example.olympus
 
+// Activity para ver el detalle de un usuario y sus rutinas (vista de Entrenador)
 import android.content.Intent
+import android.widget.Toast
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -47,6 +49,7 @@ class DetalleUsuarioActivity : AppCompatActivity() {
         loadRutinasUsuario()
     }
 
+    // Carga las rutinas del usuario seleccionado desde Firebase
     private fun loadRutinasUsuario() {
         if (userUid.isBlank()) {
             recyclerRutinasUsuario.adapter = RutinasEntrenadorAdapter(
@@ -81,11 +84,7 @@ class DetalleUsuarioActivity : AppCompatActivity() {
                                     deleteResult.onSuccess {
                                         loadRutinasUsuario()
                                     }.onFailure { error ->
-                                        android.widget.Toast.makeText(
-                                            this,
-                                            error.message ?: "No se pudo eliminar la rutina",
-                                            android.widget.Toast.LENGTH_LONG
-                                        ).show()
+                                        showToast(error.message ?: "No se pudo eliminar la rutina", Toast.LENGTH_LONG)
                                     }
                                 }
                             }
@@ -93,11 +92,7 @@ class DetalleUsuarioActivity : AppCompatActivity() {
                     )
                     recyclerRutinasUsuario.adapter = adapter
                 }.onFailure { error ->
-                    android.widget.Toast.makeText(
-                        this,
-                        error.message ?: "No se pudieron cargar las rutinas del usuario",
-                        android.widget.Toast.LENGTH_LONG
-                    ).show()
+                    showToast(error.message ?: "No se pudieron cargar las rutinas del usuario", Toast.LENGTH_LONG)
                 }
             }
         }

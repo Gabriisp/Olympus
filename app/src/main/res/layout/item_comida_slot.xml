@@ -1,130 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardBackgroundColor="@color/gym_card_background"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="4dp">
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="8dp"
+    android:background="@drawable/bg_card"
+    android:orientation="vertical"
+    android:padding="16dp">
 
+    <!-- Cabecera: tipo de comida -->
+    <TextView
+        android:id="@+id/tvTipoComida"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:text="Desayuno"
+        android:textColor="@color/gym_primary"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <!-- Si hay comida asignada -->
     <LinearLayout
+        android:id="@+id/layoutComidaAsignada"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone">
 
-        <!-- Cabecera: tipo de comida -->
-        <TextView
-            android:id="@+id/tvTipoComida"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="🌅 Desayuno"
-            android:textColor="@color/gym_blue"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="12dp"/>
+        <ImageView
+            android:id="@+id/ivComidaImagen"
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:scaleType="centerCrop"
+            android:src="@android:drawable/ic_menu_gallery"
+            android:layout_marginEnd="12dp"/>
 
-        <!-- Si hay comida asignada -->
         <LinearLayout
-            android:id="@+id/layoutComidaAsignada"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:visibility="gone">
-
-            <ImageView
-                android:id="@+id/ivComidaImagen"
-                android:layout_width="72dp"
-                android:layout_height="72dp"
-                android:scaleType="centerCrop"
-                android:src="@android:drawable/ic_menu_gallery"
-                android:layout_marginEnd="12dp"/>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tvNombreComida"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Avena con Frutas"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    android:textStyle="bold"/>
-
-                <TextView
-                    android:id="@+id/tvDescComida"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Descripción de la comida"
-                    android:textColor="@color/gym_text_gray"
-                    android:textSize="13sp"
-                    android:layout_marginTop="2dp"
-                    android:maxLines="2"
-                    android:ellipsize="end"/>
-
-                <TextView
-                    android:id="@+id/tvCaloriasComida"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="320 kcal"
-                    android:textColor="@color/gym_blue"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="4dp"/>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginStart="8dp">
-
-                <ImageButton
-                    android:id="@+id/btnEditarComida"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:src="@android:drawable/ic_menu_edit"
-                    android:tint="@color/gym_text_gray"
-                    android:contentDescription="Editar"
-                    android:layout_marginBottom="4dp"/>
-
-                <ImageButton
-                    android:id="@+id/btnEliminarComida"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:src="@android:drawable/ic_menu_delete"
-                    android:tint="@color/gym_text_gray"
-                    android:contentDescription="Eliminar"/>
-            </LinearLayout>
-        </LinearLayout>
-
-        <!-- Si NO hay comida asignada: botón + -->
-        <LinearLayout
-            android:id="@+id/btnAgregarComida"
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:background="@color/gym_button_dark"
-            android:clickable="true"
-            android:focusable="true">
+            android:layout_weight="1"
+            android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tvNombreComida"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="+ Añadir comida"
-                android:textColor="@color/gym_text_gray"
-                android:textSize="15sp"/>
+                android:text="Avena con Frutas"
+                android:textColor="@color/gym_text_primary"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/tvDescComida"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="Descripción de la comida"
+                android:textColor="@color/gym_text_secondary"
+                android:textSize="13sp"/>
+
+            <TextView
+                android:id="@+id/tvCaloriasComida"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="320 kcal"
+                android:textColor="@color/gym_cyan"
+                android:textSize="13sp"
+                android:textStyle="bold"/>
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/btnEditarComida"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@android:drawable/ic_menu_edit"
+                android:tint="@color/gym_text_secondary"
+                android:contentDescription="Editar"
+                android:layout_marginBottom="4dp"/>
+
+            <ImageButton
+                android:id="@+id/btnEliminarComida"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@android:drawable/ic_menu_delete"
+                android:tint="@color/gym_text_muted"
+                android:contentDescription="Eliminar"/>
+        </LinearLayout>
     </LinearLayout>
 
-</androidx.cardview.widget.CardView>
+    <!-- Si NO hay comida asignada: botón + -->
+    <LinearLayout
+        android:id="@+id/btnAgregarComida"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="@drawable/bg_button_secondary"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="+ Añadir comida"
+            android:textColor="@color/gym_primary"
+            android:textSize="15sp"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,5 +1,6 @@
 package com.example.olympus
 
+// Activity para ver el detalle de un usuario y sus planes nutricionales (vista de Nutricionista)
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -8,6 +9,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.olympus.utils.SessionManager
 
 class DetalleUsuarioNutricionistaActivity : AppCompatActivity() {
 
@@ -49,6 +51,7 @@ class DetalleUsuarioNutricionistaActivity : AppCompatActivity() {
         loadPlanes()
     }
 
+    // Carga los planes nutricionales del usuario seleccionado desde Firebase
     private fun loadPlanes() {
         if (userUid.isBlank()) return
 
@@ -71,22 +74,14 @@ class DetalleUsuarioNutricionistaActivity : AppCompatActivity() {
                                     deleteResult.onSuccess {
                                         loadPlanes()
                                     }.onFailure { error ->
-                                        Toast.makeText(
-                                            this,
-                                            error.message ?: "No se pudo eliminar el plan",
-                                            Toast.LENGTH_LONG
-                                        ).show()
+                                        showToast(error.message ?: "No se pudo eliminar el plan", Toast.LENGTH_LONG)
                                     }
                                 }
                             }
                         }
                     )
                 }.onFailure { error ->
-                    Toast.makeText(
-                        this,
-                        error.message ?: "No se pudieron cargar los planes",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    showToast(error.message ?: "No se pudieron cargar los planes", Toast.LENGTH_LONG)
                 }
             }
         }

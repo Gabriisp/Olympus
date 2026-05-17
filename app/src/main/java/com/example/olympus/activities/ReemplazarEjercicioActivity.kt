@@ -1,5 +1,6 @@
 package com.example.olympus
 
+// Activity para reemplazar un ejercicio existente en una rutina
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -41,19 +42,15 @@ class ReemplazarEjercicioActivity : AppCompatActivity() {
                 ) { result ->
                     runOnUiThread {
                         result.onSuccess {
-                            Toast.makeText(this, "Ejercicio reemplazado", Toast.LENGTH_SHORT).show()
+                            showToast("Ejercicio reemplazado")
                             finish()
                         }.onFailure { error ->
-                            Toast.makeText(
-                                this,
-                                error.message ?: "No se pudo reemplazar el ejercicio",
-                                Toast.LENGTH_LONG
-                            ).show()
+                            showToast(error.message ?: "No se pudo reemplazar el ejercicio", Toast.LENGTH_LONG)
                         }
                     }
                 }
             } else {
-                Toast.makeText(this, "No se encontró el ejercicio sincronizado", Toast.LENGTH_LONG).show()
+                showToast("No se encontró el ejercicio sincronizado", Toast.LENGTH_LONG)
             }
         }
 

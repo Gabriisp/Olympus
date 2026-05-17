@@ -3,41 +3,57 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="gym_background">#131B2E</color>
+    <!-- Fondo principal - tono más claro -->
+    <color name="gym_background">#1E293B</color>
 
-    <color name="gym_card_background">#1E2638</color>
+    <!-- Cards con borde sutil -->
+    <color name="gym_card_background">#334155</color>
+    <color name="gym_card_border">#475569</color>
 
-    <color name="gym_blue">#2563EB</color>
+    <!-- Gradiente principal: Índigo a Cian -->
+    <color name="gym_primary_start">#4F46E5</color>
+    <color name="gym_primary_end">#06B6D4</color>
+    <color name="gym_primary">#6366F1</color>
+    <color name="gym_blue">#6366F1</color>
+    <color name="gym_cyan">#06B6D4</color>
 
-    <color name="gym_text_gray">#9CA3AF</color>
+    <!-- Acentos dorados -->
+    <color name="gym_accent">#F59E0B</color>
+    <color name="gym_accent_light">#FBBF24</color>
 
+    <!-- Textos - para fondo más claro -->
+    <color name="gym_text_primary">#F1F5F9</color>
+    <color name="gym_text_secondary">#CBD5E1</color>
+    <color name="gym_text_muted">#94A3B8</color>
+    <color name="gym_text_gray">#CBD5E1</color>
+
+    <!-- Superficies -->
+    <color name="gym_surface">#334155</color>
     <color name="gym_surface_white">#F3F4F6</color>
 
-    <color name="gym_button_dark">#0F172A</color>
+    <!-- Botones -->
+    <color name="gym_button_dark">#1E293B</color>
+    <color name="gym_button_pressed">#475569</color>
+    <color name="gym_button_slate">#3D4F5F</color>
 
+    <!-- Login (sin cambios) -->
     <color name="login_shell_background">#1A2338</color>
-
     <color name="login_panel_background">#22304A</color>
-
     <color name="login_panel_stroke">#33425F</color>
-
     <color name="login_tab_container">#E7E7EC</color>
-
     <color name="login_tab_selected">#FFFFFF</color>
-
     <color name="login_input_background">#2A3852</color>
-
     <color name="login_input_stroke">#42516B</color>
-
     <color name="login_icon">#AEB8C8</color>
-
     <color name="login_subtitle">#B2C2D8</color>
-
     <color name="login_muted">#AAB6C8</color>
-
     <color name="login_link">#63A3FF</color>
-
     <color name="login_accent">#63A3FF</color>
-
     <color name="register_primary_green">#1FAF44</color>
+
+    <!-- Estados -->
+    <color name="gym_success">#10B981</color>
+    <color name="gym_error">#EF4444</color>
+    <color name="gym_warning">#F59E0B</color>
+    <color name="ic_launcher_background">#FFFFFF</color>
 </resources>

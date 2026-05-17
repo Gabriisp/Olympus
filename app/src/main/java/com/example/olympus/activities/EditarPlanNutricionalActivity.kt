@@ -1,5 +1,7 @@
 package com.example.olympus
 
+// Activity para editar un plan nutricional y gestionar sus comidas
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -51,13 +53,9 @@ class EditarPlanNutricionalActivity : AppCompatActivity() {
             firebaseRepository.updatePlan(planId, nombre, descripcion) { result ->
                 runOnUiThread {
                     result.onSuccess {
-                        Toast.makeText(this, "Plan actualizado", Toast.LENGTH_SHORT).show()
+                        showToast("Plan actualizado")
                     }.onFailure { error ->
-                        Toast.makeText(
-                            this,
-                            error.message ?: "No se pudo actualizar el plan",
-                            Toast.LENGTH_LONG
-                        ).show()
+                        showToast(error.message ?: "No se pudo actualizar el plan", Toast.LENGTH_LONG)
                     }
                 }
             }
@@ -69,6 +67,7 @@ class EditarPlanNutricionalActivity : AppCompatActivity() {
         loadComidas()
     }
 
+    // Carga los datos del plan nutricional desde Firebase
     private fun loadPlan() {
         firebaseRepository.getPlanById(planId) { result ->
             runOnUiThread {
@@ -76,16 +75,13 @@ class EditarPlanNutricionalActivity : AppCompatActivity() {
                     etNombrePlan.setText(plan.nombre)
                     etDescripcionPlan.setText(plan.descripcion)
                 }.onFailure { error ->
-                    Toast.makeText(
-                        this,
-                        error.message ?: "No se pudo cargar el plan",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    showToast(error.message ?: "No se pudo cargar el plan", Toast.LENGTH_LONG)
                 }
             }
         }
     }
 
+    // Carga las comidas del plan nutricional desde Firebase
     private fun loadComidas() {
         firebaseRepository.getMealsOfPlan(planId) { result ->
             runOnUiThread {
@@ -97,11 +93,7 @@ class EditarPlanNutricionalActivity : AppCompatActivity() {
                         onEliminarComida = { comidaId -> confirmarEliminarComida(comidaId) }
                     )
                 }.onFailure { error ->
-                    Toast.makeText(
-                        this,
-                        error.message ?: "No se pudieron cargar las comidas",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    showToast(error.message ?: "No se pudieron cargar las comidas", Toast.LENGTH_LONG)
                 }
             }
         }
@@ -124,11 +116,7 @@ class EditarPlanNutricionalActivity : AppCompatActivity() {
                         startActivity(intent)
                     }
                 }.onFailure { error ->
-                    Toast.makeText(
-                        this,
-                        error.message ?: "No se pudo validar el tipo de comida",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    showToast(error.message ?: "No se pudo validar el tipo de comida", Toast.LENGTH_LONG)
                 }
             }
         }
@@ -139,64 +127,72 @@ class EditarPlanNutricionalActivity : AppCompatActivity() {
         val etNombre = dialogView.findViewById<EditText>(R.id.etNombreComidaEditar)
         val etDescripcion = dialogView.findViewById<EditText>(R.id.etDescripcionComidaEditar)
         val etCalorias = dialogView.findViewById<EditText>(R.id.etCaloriasComidaEditar)
+        val btnGuardar = dialogView.findViewById<Button>(R.id.btnGuardarDialog)
+        val btnCancelar = dialogView.findViewById<Button>(R.id.btnCancelarDialog)
 
         etNombre.setText(comida.nombre)
         etDescripcion.setText(comida.descripcion)
         etCalorias.setText(comida.calorias.toString())
 
-        AlertDialog.Builder(this)
-            .setTitle("Editar ${comida.tipo}")
-            .setView(dialogView)
-            .setPositiveButton("Guardar") { _, _ ->
-                val nuevoNombre = etNombre.text.toString().trim().ifEmpty { comida.nombre }
-                val nuevaDesc = etDescripcion.text.toString().trim()
-                val nuevasCal = etCalorias.text.toString().toIntOrNull() ?: comida.calorias
+        val dialog = Dialog(this, R.style.Theme_Olympus_Dialog)
+        dialog.setContentView(dialogView)
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
-                firebaseRepository.updateMeal(
-                    planId = planId,
-                    mealId = comida.id,
-                    nombre = nuevoNombre,
-                    descripcion = nuevaDesc,
-                    calorias = nuevasCal,
-                    imagenId = comida.imagenId
-                ) { result ->
-                    runOnUiThread {
-                        result.onSuccess {
-                            loadComidas()
-                        }.onFailure { error ->
-                            Toast.makeText(
-                                this,
-                                error.message ?: "No se pudo actualizar la comida",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
+        btnGuardar.setOnClickListener {
+            val nuevasCal = etCalorias.text.toString().toIntOrNull() ?: comida.calorias
+
+            firebaseRepository.updateMeal(
+                planId = planId,
+                mealId = comida.id,
+                nombre = comida.nombre,
+                descripcion = comida.descripcion,
+                calorias = nuevasCal,
+                imagenId = comida.imagenId
+            ) { result ->
+                runOnUiThread {
+                    result.onSuccess {
+                        loadComidas()
+                    }.onFailure { error ->
+                        showToast(error.message ?: "No se pudo actualizar la comida", Toast.LENGTH_LONG)
                     }
                 }
             }
-            .setNegativeButton("Cancelar", null)
-            .show()
+            dialog.dismiss()
+        }
+
+        btnCancelar.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
     }
 
     private fun confirmarEliminarComida(comidaId: String) {
-        AlertDialog.Builder(this)
-            .setTitle("Eliminar comida")
-            .setMessage("¿Seguro que deseas eliminar esta comida del plan?")
-            .setPositiveButton("Eliminar") { _, _ ->
-                firebaseRepository.deleteMeal(planId, comidaId) { result ->
-                    runOnUiThread {
-                        result.onSuccess {
-                            loadComidas()
-                        }.onFailure { error ->
-                            Toast.makeText(
-                                this,
-                                error.message ?: "No se pudo eliminar la comida",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
+        val dialogView = layoutInflater.inflate(R.layout.dialog_confirmar_eliminar, null)
+        val btnCancelar = dialogView.findViewById<Button>(R.id.btnCancelarEliminar)
+        val btnConfirmar = dialogView.findViewById<Button>(R.id.btnConfirmarEliminar)
+
+        val dialog = Dialog(this, R.style.Theme_Olympus_Dialog)
+        dialog.setContentView(dialogView)
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        btnCancelar.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        btnConfirmar.setOnClickListener {
+            firebaseRepository.deleteMeal(planId, comidaId) { result ->
+                runOnUiThread {
+                    result.onSuccess {
+                        loadComidas()
+                    }.onFailure { error ->
+                        showToast(error.message ?: "No se pudo eliminar la comida", Toast.LENGTH_LONG)
                     }
                 }
             }
-            .setNegativeButton("Cancelar", null)
-            .show()
+            dialog.dismiss()
+        }
+
+        dialog.show()
     }
 }

@@ -1,5 +1,6 @@
 package com.example.olympus
 
+// Activity para que el nutricionista cree un plan nutricional para un cliente
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -7,6 +8,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.olympus.utils.SessionManager
 
 class CrearPlanNutricionalActivity : AppCompatActivity() {
 
@@ -40,7 +42,7 @@ class CrearPlanNutricionalActivity : AppCompatActivity() {
             val nutritionistUid = sessionManager.getUserUid().orEmpty()
 
             if (nombre.isEmpty()) {
-                Toast.makeText(this, "Ingresa un nombre para el plan", Toast.LENGTH_SHORT).show()
+                showToast("Ingresa un nombre para el plan")
                 return@setOnClickListener
             }
 
@@ -52,7 +54,7 @@ class CrearPlanNutricionalActivity : AppCompatActivity() {
             ) { result ->
                 runOnUiThread {
                     result.onSuccess { planId ->
-                        Toast.makeText(this, "Plan creado", Toast.LENGTH_SHORT).show()
+                        showToast("Plan creado")
                         val intent = Intent(this, EditarPlanNutricionalActivity::class.java)
                         intent.putExtra("PLAN_ID", planId)
                         intent.putExtra("USER_UID", userUid)
@@ -60,11 +62,7 @@ class CrearPlanNutricionalActivity : AppCompatActivity() {
                         startActivity(intent)
                         finish()
                     }.onFailure { error ->
-                        Toast.makeText(
-                            this,
-                            error.message ?: "No se pudo crear el plan",
-                            Toast.LENGTH_LONG
-                        ).show()
+                        showToast(error.message ?: "No se pudo crear el plan", Toast.LENGTH_LONG)
                     }
                 }
             }

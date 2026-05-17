@@ -1,5 +1,6 @@
 package com.example.olympus
 
+// Activity para mostrar las estadisticas y metricas de una rutina
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
@@ -42,6 +43,7 @@ class EstadisticasRutinaActivity : AppCompatActivity() {
         }
     }
 
+    // Carga los datos de la rutina y sus estadisticas desde Firebase
     private fun loadData() {
         firebaseRepository.getRoutineById(routineId) { routineResult ->
             runOnUiThread {

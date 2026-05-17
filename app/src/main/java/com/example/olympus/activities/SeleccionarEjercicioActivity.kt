@@ -1,5 +1,6 @@
 package com.example.olympus
 
+// Activity para seleccionar y agregar un ejercicio a una rutina
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -31,19 +32,15 @@ class SeleccionarEjercicioActivity : AppCompatActivity() {
 
         adapter = EjerciciosListAdapter(ejerciciosList) { ejercicio ->
             if (cloudRoutineId.isBlank()) {
-                Toast.makeText(this, "No se encontró la rutina en la nube", Toast.LENGTH_LONG).show()
+                showToast("No se encontró la rutina en la nube", Toast.LENGTH_LONG)
             } else {
                 firebaseRepository.addExerciseToRoutine(cloudRoutineId, ejercicio.id, ejercicio.nombre) { result ->
                     runOnUiThread {
                         result.onSuccess {
-                            Toast.makeText(this, "${ejercicio.nombre} agregado", Toast.LENGTH_SHORT).show()
+                            showToast("${ejercicio.nombre} agregado")
                             finish()
                         }.onFailure { error ->
-                            Toast.makeText(
-                                this,
-                                error.message ?: "No se pudo agregar el ejercicio",
-                                Toast.LENGTH_LONG
-                            ).show()
+                            showToast(error.message ?: "No se pudo agregar el ejercicio", Toast.LENGTH_LONG)
                         }
                     }
                 }
