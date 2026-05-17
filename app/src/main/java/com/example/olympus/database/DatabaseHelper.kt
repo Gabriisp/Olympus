@@ -1,5 +1,8 @@
 package com.example.olympus
 
+// Helper para la base de datos SQLite local (legacy, puede no estar en uso)
+// Gestiona la tabla de usuarios en SQLite
+
 import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
