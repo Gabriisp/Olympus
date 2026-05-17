@@ -1,32 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:layout_margin="24dp"
+    app:cardBackgroundColor="@color/gym_card_background"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp">
 
-    <EditText
-        android:id="@+id/etNombreComidaEditar"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nombre de la comida"
-        android:layout_marginBottom="12dp"/>
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <EditText
-        android:id="@+id/etDescripcionComidaEditar"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:hint="Descripción..."
-        android:gravity="top"
-        android:inputType="textMultiLine"
-        android:layout_marginBottom="12dp"/>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:boxStrokeColor="@color/gym_primary"
+            app:hintTextColor="@color/gym_primary"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-    <EditText
-        android:id="@+id/etCaloriasComidaEditar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Calorías (kcal)"
-        android:inputType="number"
-        android:layout_marginBottom="4dp"/>
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etNombreComidaEditar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nombre de la comida"
+                android:textColor="@color/gym_text_secondary"
+                android:enabled="false"/>
+        </com.google.android.material.textfield.TextInputLayout>
 
-</LinearLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            app:boxStrokeColor="@color/gym_primary"
+            app:hintTextColor="@color/gym_primary"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etDescripcionComidaEditar"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:hint="Descripción..."
+                android:inputType="textMultiLine"
+                android:textColor="@color/gym_text_secondary"
+                android:enabled="false"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:boxStrokeColor="@color/gym_primary"
+            app:hintTextColor="@color/gym_primary"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etCaloriasComidaEditar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Calorías (kcal)"
+                android:inputType="number"
+                android:textColor="@color/gym_text_primary"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnCancelarDialog"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Cancelar"
+                android:background="@drawable/bg_button_primary"
+                android:layout_marginEnd="8dp"
+                android:padding="12dp"
+                android:textColor="@color/white"
+                android:textSize="14sp"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnGuardarDialog"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Guardar"
+                android:background="@drawable/bg_button_primary"
+                android:padding="12dp"
+                android:textColor="@color/white"
+                android:textSize="14sp"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

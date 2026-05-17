@@ -1,39 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="150dp"
-    android:layout_margin="8dp"
-    app:cardBackgroundColor="@color/gym_card_background"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="4dp">
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="8dp"
+    android:layout_marginVertical="8dp"
+    android:background="@drawable/bg_card"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="20dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center"
-        android:padding="16dp">
+    <ImageView
+        android:id="@+id/imgEjercicio"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@android:drawable/ic_menu_gallery"
+        android:tint="@color/gym_primary"
+        android:contentDescription="Imagen ejercicio"/>
 
-        <ImageView
-            android:id="@+id/imgEjercicio"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@android:drawable/ic_menu_gallery"
-            android:tint="@color/gym_blue"
-            android:contentDescription="Imagen ejercicio"/>
+    <TextView
+        android:id="@+id/tvNombreEjercicio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="Press de Banca"
+        android:textAlignment="center"
+        android:textColor="@color/gym_text_primary"
+        android:textSize="14sp"
+        android:textStyle="bold"/>
 
-        <TextView
-            android:id="@+id/tvNombreEjercicio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Press de Banca"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:textAlignment="center"
-            android:layout_marginTop="12dp"/>
-
-    </LinearLayout>
-
-</androidx.cardview.widget.CardView>
+</LinearLayout>

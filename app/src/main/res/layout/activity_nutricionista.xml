@@ -6,12 +6,15 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <!-- Header Premium -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
+        android:background="@drawable/bg_card"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="16dp">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -23,7 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Panel de Nutricionista"
-                android:textColor="@color/white"
+                android:textColor="@color/gym_text_primary"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -33,70 +36,83 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:text="Bienvenido, Nutricionista"
-                android:textColor="@color/gym_blue"
+                android:textColor="@color/gym_cyan"
                 android:textSize="14sp" />
         </LinearLayout>
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnChangePasswordNutricionista"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/bg_login_primary_button"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:text="@string/panel_change_password"
-            android:textColor="@color/white"
-            android:textSize="11sp" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnLogoutNutricionista"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:background="@drawable/fondo_boton_xml"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:text="Cerrar Sesión"
-            android:textColor="@color/white"
-            android:textSize="12sp" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnChangePasswordNutricionista"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/bg_button_primary"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:text="Password"
+                android:textColor="@color/white"
+                android:textSize="11sp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnLogoutNutricionista"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_button_primary"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:text="Salir"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </LinearLayout>
     </LinearLayout>
 
+    <!-- Sección de solicitudes -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/service_notifications"
-        android:textColor="@color/white"
-        android:textSize="20sp"
+        android:layout_marginBottom="12dp"
+        android:text="Solicitudes"
+        android:textColor="@color/gym_text_primary"
+        android:textSize="18sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvEmptyRequestsNutricionista"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="@string/service_notifications_empty"
-        android:textColor="@color/gym_text_gray"
+        android:layout_marginTop="8dp"
+        android:text="No hay solicitudes pendientes"
+        android:textColor="@color/gym_text_muted"
         android:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerServiceRequestsNutricionista"
         android:layout_width="match_parent"
         android:layout_height="140dp"
-        android:layout_marginTop="12dp" />
+        android:layout_marginBottom="20dp"
+        android:clipToPadding="false"
+        android:paddingBottom="8dp"/>
 
+    <!-- Sección de clientes -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="16dp"
-        android:text="@string/service_clients_title"
-        android:textColor="@color/white"
-        android:textSize="20sp"
+        android:layout_marginBottom="12dp"
+        android:text="Mis Clientes"
+        android:textColor="@color/gym_text_primary"
+        android:textSize="18sp"
         android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerUsuariosNutricionista"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingBottom="80dp"/>
+
 </LinearLayout>

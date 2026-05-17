@@ -1,5 +1,6 @@
 package com.example.olympus
 
+// Fragmento que muestra los planes nutricionales del usuario
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.olympus.utils.SessionManager
 
 class NutricionFragment : Fragment() {
 
@@ -39,6 +41,7 @@ class NutricionFragment : Fragment() {
         loadPlanes()
     }
 
+    // Carga los planes nutricionales del usuario desde Firebase
     private fun loadPlanes() {
         val userUid = sessionManager.getUserUid().orEmpty()
         if (userUid.isBlank()) return
@@ -55,11 +58,7 @@ class NutricionFragment : Fragment() {
                         recyclerPlanes.adapter = PlanesUsuarioAdapter(planes, firebaseRepository)
                     }
                 }.onFailure { error ->
-                    Toast.makeText(
-                        requireContext(),
-                        error.message ?: "No se pudieron cargar los planes",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    requireContext().showToast(error.message ?: "No se pudieron cargar los planes", Toast.LENGTH_LONG)
                 }
             }
         }
