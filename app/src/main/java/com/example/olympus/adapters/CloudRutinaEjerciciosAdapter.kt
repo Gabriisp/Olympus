@@ -1,6 +1,6 @@
 package com.example.olympus
 
-// Adapter para mostrar ejercicios de una rutina local
+// Adapter para mostrar ejercicios de una rutina guardada en la nube
 import android.graphics.Color
 import android.text.Spannable
 import android.text.SpannableStringBuilder
@@ -15,13 +15,16 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class RutinaEjerciciosAdapter(
-    private var ejercicios: List<RutinaEjercicio>,
-    private val onAgregarSerie: (Int) -> Unit,
-    private val onEliminarEjercicio: (Int) -> Unit,
-    private val onReordenar: (Int, Boolean) -> Unit,
-    private val onReemplazar: (Int) -> Unit
-) : RecyclerView.Adapter<RutinaEjerciciosAdapter.EjercicioViewHolder>() {
+class CloudRutinaEjerciciosAdapter(
+    private var ejercicios: List<CloudRoutineExercise>,
+    private val firebaseRepository: FirebaseRepository,
+    private val routineId: String,
+    private val onAgregarSerie: (String) -> Unit,
+    private val onEliminarEjercicio: (String) -> Unit,
+    private val onReordenar: (String, Boolean) -> Unit,
+    private val onReemplazar: (String) -> Unit,
+    private val onEditarSerie: (String, String, CloudRoutineSet) -> Unit
+) : RecyclerView.Adapter<CloudRutinaEjerciciosAdapter.EjercicioViewHolder>() {
 
     inner class EjercicioViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val tvNombreEjercicio: TextView = view.findViewById(R.id.tvNombreEjercicio)
@@ -38,7 +41,7 @@ class RutinaEjerciciosAdapter(
 
     override fun onBindViewHolder(holder: EjercicioViewHolder, position: Int) {
         val ejercicio = ejercicios[position]
-        holder.tvNombreEjercicio.text = ejercicio.ejercicioNombre
+        holder.tvNombreEjercicio.text = ejercicio.exerciseName
 
         holder.btnAgregarSerie.setOnClickListener {
             onAgregarSerie(ejercicio.id)
@@ -82,20 +85,29 @@ class RutinaEjerciciosAdapter(
             popup.show()
         }
 
-        val dbHelper = RutinasDatabaseHelper(holder.itemView.context)
-        val series = dbHelper.getSeriesDeEjercicio(ejercicio.id)
-        
         holder.recyclerSeries.layoutManager = LinearLayoutManager(holder.itemView.context)
-        holder.recyclerSeries.adapter = SeriesAdapter(series) { serieId ->
-            dbHelper.eliminarSerie(serieId)
-            notifyItemChanged(position)
+        firebaseRepository.getSetsOfExercise(routineId, ejercicio.id) { result ->
+            holder.itemView.post {
+                val series = result.getOrDefault(emptyList())
+                holder.recyclerSeries.adapter = CloudSeriesAdapter(
+                    series = series,
+                    onEliminarSerie = { setId ->
+                        firebaseRepository.deleteSet(routineId, ejercicio.id, setId) {
+                            holder.itemView.post { notifyItemChanged(position) }
+                        }
+                    },
+                    onEditarSerie = { set ->
+                        onEditarSerie(routineId, ejercicio.id, set)
+                    }
+                )
+            }
         }
     }
 
     override fun getItemCount() = ejercicios.size
 
-    // Actualiza la lista de ejercicios locales
-    fun updateEjercicios(newList: List<RutinaEjercicio>) {
+    // Actualiza la lista de ejercicios y refresca la vista
+    fun updateEjercicios(newList: List<CloudRoutineExercise>) {
         ejercicios = newList
         notifyDataSetChanged()
     }

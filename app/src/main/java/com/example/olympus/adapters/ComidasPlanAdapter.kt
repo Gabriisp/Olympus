@@ -1,5 +1,6 @@
 package com.example.olympus
 
+// Adapter para mostrar los slots de comida en un plan nutricional
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,8 +38,7 @@ class ComidasPlanAdapter(
 
     override fun onBindViewHolder(holder: SlotViewHolder, position: Int) {
         val tipo = tipos[position]
-        val emoji = ComidaData.EMOJIS_TIPO[tipo] ?: ""
-        holder.tvTipoComida.text = "$emoji $tipo"
+        holder.tvTipoComida.text = tipo
 
         val comidaAsignada = comidasAsignadas.find { it.tipo == tipo }
 
@@ -48,7 +48,7 @@ class ComidasPlanAdapter(
             holder.tvNombreComida.text = comidaAsignada.nombre
             holder.tvDescComida.text = comidaAsignada.descripcion
             holder.tvCaloriasComida.text = "${comidaAsignada.calorias} kcal"
-            holder.ivComidaImagen.setImageResource(android.R.drawable.ic_menu_gallery)
+            holder.ivComidaImagen.setImageResource(ComidaData.getDrawableResId(comidaAsignada.imagenId))
 
             holder.btnEditarComida.setOnClickListener { onEditarComida(comidaAsignada) }
             holder.btnEliminarComida.setOnClickListener { onEliminarComida(comidaAsignada.id) }

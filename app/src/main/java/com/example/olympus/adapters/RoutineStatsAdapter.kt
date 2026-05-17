@@ -1,5 +1,6 @@
 package com.example.olympus
 
+// Adapter para mostrar el resumen de estadísticas de una rutina
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -44,11 +45,13 @@ class RoutineStatsAdapter(
 
     override fun getItemCount(): Int = items.size
 
+    // Actualiza los items y refresca la lista
     fun updateItems(newItems: List<RoutineStatsItem>) {
         items = newItems
         notifyDataSetChanged()
     }
 
+    // Formatea un numero decimal sin decimales si es entero
     private fun formatDecimal(value: Float): String {
         return if (value % 1f == 0f) {
             value.toInt().toString()

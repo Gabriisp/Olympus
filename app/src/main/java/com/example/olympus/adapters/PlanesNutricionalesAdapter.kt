@@ -1,5 +1,10 @@
 package com.example.olympus
 
+// Adapter para mostrar planes nutricionales creados por un nutriologo
+import android.graphics.Color
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,6 +56,13 @@ class PlanesNutricionalesAdapter(
         holder.btnMenu.setOnClickListener {
             val popup = PopupMenu(holder.itemView.context, holder.btnMenu)
             popup.inflate(R.menu.menu_plan_nutricional)
+
+            for (i in 0 until popup.menu.size()) {
+                popup.menu.getItem(i).title = SpannableStringBuilder(popup.menu.getItem(i).title.toString()).apply {
+                    setSpan(ForegroundColorSpan(Color.WHITE), 0, length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+                }
+            }
+
             popup.setOnMenuItemClickListener { item ->
                 when (item.itemId) {
                     R.id.action_editar_plan -> {

@@ -1,5 +1,6 @@
 package com.example.olympus
 
+// Adapter para mostrar estadísticas de un ejercicio con grafico de progreso
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
@@ -35,7 +36,7 @@ class ExerciseStatsAdapter(
     override fun onBindViewHolder(holder: ExerciseStatsViewHolder, position: Int) {
         val stat = stats[position]
         holder.tvExerciseName.text = stat.ejercicioNombre
-        holder.tvTrend.text = buildTrendLabel(stat.tendenciaPeso)
+        holder.tvTrend.text = buildTrendLabel(stat)
         holder.tvTrend.setTextColor(resolveTrendColor(stat.tendenciaPeso))
         holder.tvSummary.text =
             "Series: ${stat.totalSeries} · Max: ${formatDecimal(stat.maxPeso)} kg · Reps máx: ${stat.maxRepeticiones} · Media: ${formatDecimal(stat.promedioPeso)} kg"
@@ -46,16 +47,30 @@ class ExerciseStatsAdapter(
 
     override fun getItemCount(): Int = stats.size
 
+    // Actualiza las estadisticas y refresca la vista
     fun updateStats(newStats: List<ExerciseProgressStat>) {
         stats = newStats
         notifyDataSetChanged()
     }
 
-    private fun buildTrendLabel(trend: Float): String {
+    // Construye la etiqueta de tendencia para mostrar progreso
+    private fun buildTrendLabel(stat: ExerciseProgressStat): String {
+        val difMaxPeso = if (stat.pesosPorSerie.size >= 2)
+            stat.pesosPorSerie.last() - stat.pesosPorSerie.first() else 0f
+        val difVolumen = if (stat.evolucionVolumen.size >= 2)
+            stat.evolucionVolumen.last() - stat.evolucionVolumen.first() else 0f
+
         return when {
-            trend > 0f -> "Mejora: +${formatDecimal(abs(trend))} kg desde la primera serie"
-            trend < 0f -> "Baja: -${formatDecimal(abs(trend))} kg desde la primera serie"
-            else -> "Sin cambio de peso entre el inicio y el final"
+            difMaxPeso > 0f ->
+                " +${formatDecimal(difMaxPeso)} kg de peso máximo desde el inicio"
+            difMaxPeso < 0f ->
+                " ${formatDecimal(difMaxPeso)} kg de peso máximo desde el inicio"
+            difVolumen > 0f ->
+                " +${formatDecimal(difVolumen)} kg de volumen total desde el inicio"
+            difVolumen < 0f ->
+                " -${formatDecimal(abs(difVolumen))} kg de volumen total desde el inicio"
+            else ->
+                "Sin cambios registrados aún"
         }
     }
 
@@ -67,11 +82,21 @@ class ExerciseStatsAdapter(
         }
     }
 
+    // Configura el grafico de linea para mostrar el progreso del ejercicio
     private fun setupExerciseChart(chart: LineChart, stat: ExerciseProgressStat) {
         val entries = stat.pesosPorSerie.mapIndexed { index, peso ->
             Entry((index + 1).toFloat(), peso)
         }
-        val labels = stat.pesosPorSerie.indices.map { "S${it + 1}" }
+
+        // Etiquetas del eje X: "Inicio" al principio, "Hoy" al final
+        val labels = when (stat.pesosPorSerie.size) {
+            0 -> listOf("Sin datos")
+            1 -> listOf("Inicio")
+            2 -> listOf("Inicio", "Hoy")
+            else -> listOf("Inicio") +
+                    (2 until stat.pesosPorSerie.size).map { "Cambio $it" } +
+                    listOf("Hoy")
+        }
 
         chart.description.isEnabled = false
         chart.setDrawGridBackground(false)
