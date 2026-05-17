@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@color/gym_background"
+    android:gravity="center">
+
+    <TextView
+        android:id="@+id/tvNombreArticuloZoom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nombre Artículo"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="center"/>
+
+    <ImageView
+        android:id="@+id/ivArticuloZoom"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_tienda_placeholder"
+        android:layout_marginTop="16dp"
+        android:contentDescription="Imagen ampliada"/>
+
+    <TextView
+        android:id="@+id/tvDescripcionArticuloZoom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Descripción"
+        android:textColor="@color/gym_text_gray"
+        android:textSize="14sp"
+        android:gravity="center"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/tvPrecioArticuloZoom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0.00€"
+        android:textColor="@color/gym_blue"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_marginTop="8dp"/>
+
+    <Button
+        android:id="@+id/btnCerrarZoom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cerrar"
+        android:textColor="@color/white"
+        android:background="@drawable/bg_login_primary_button"
+        android:paddingStart="32dp"
+        android:paddingEnd="32dp"
+        android:layout_marginTop="24dp"/>
+
+</LinearLayout>

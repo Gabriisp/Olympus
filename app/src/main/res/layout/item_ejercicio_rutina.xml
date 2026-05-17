@@ -1,64 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardBackgroundColor="@color/gym_card_background"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="4dp">
+    android:layout_marginHorizontal="16dp"
+    android:layout_marginVertical="8dp"
+    android:background="@drawable/bg_card"
+    android:orientation="vertical"
+    android:padding="16dp">
 
+    <!-- Header con nombre y botón eliminar -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp">
+        android:layout_marginBottom="12dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-        <!-- Header con nombre y botón eliminar -->
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tvNombreEjercicio"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="8dp">
+            android:layout_weight="1"
+            android:text="Press de Banca"
+            android:textColor="@color/gym_text_primary"
+            android:textSize="16sp"
+            android:textStyle="bold"/>
 
-            <TextView
-                android:id="@+id/tvNombreEjercicio"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Press de Banca"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:textStyle="bold"/>
-
-            <ImageButton
-                android:id="@+id/btnMenuEjercicio"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:src="@android:drawable/ic_menu_more"
-                android:tint="@color/white"
-                android:contentDescription="Opciones"/>
-        </LinearLayout>
-
-        <!-- Lista de series -->
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerSeries"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"/>
-
-        <!-- Botón agregar serie -->
-        <Button
-            android:id="@+id/btnAgregarSerie"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="+ Agregar Serie"
-            android:textColor="@color/gym_blue"
-            android:background="@android:color/transparent"
-            android:textSize="14sp"/>
-
+        <ImageButton
+            android:id="@+id/btnMenuEjercicio"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@android:drawable/ic_menu_more"
+            android:tint="@color/gym_text_secondary"
+            android:contentDescription="Opciones"/>
     </LinearLayout>
 
-</androidx.cardview.widget.CardView>
+    <!-- Lista de series -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerSeries"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"/>
+
+    <!-- Botón agregar serie -->
+    <Button
+        android:id="@+id/btnAgregarSerie"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:padding="8dp"
+        android:text="+ Agregar Serie"
+        android:textColor="@color/gym_primary"
+        android:textSize="14sp"/>
+
+</LinearLayout>
