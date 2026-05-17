@@ -1,5 +1,6 @@
 package com.example.olympus
 
+// Fragmento simple que muestra la lista de gimnasios
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View

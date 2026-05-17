@@ -1,13 +1,20 @@
 package com.example.olympus
 
+// Pantalla principal para usuarios normales
+// Contiene tabs para Rutinas, Nutricion, Notas y Stats
+// Tambien permite acceder a la Tienda y ver profesionales disponibles
+
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.example.olympus.utils.SessionManager
 
 class HomeActivity : AppCompatActivity() {
 
@@ -79,10 +86,15 @@ class HomeActivity : AppCompatActivity() {
             startActivity(Intent(this, AvailableProfessionalsActivity::class.java))
         }
 
+        findViewById<Button>(R.id.btnContactos).setOnClickListener {
+            mostrarDialogoContactos()
+        }
+
         selectTab(tabRutinas)
         loadFragment(RutinasFragment())
     }
 
+    // Resetea el estilo visual de todos los tabs y aplica el estilo activo al seleccionado
     private fun selectTab(selectedTab: TextView) {
         val allTabs = listOf(tabRutinas, tabNutricion, tabNotas, tabStats)
         for (tab in allTabs) {
@@ -90,12 +102,51 @@ class HomeActivity : AppCompatActivity() {
             tab.setBackgroundColor(android.graphics.Color.TRANSPARENT)
         }
         selectedTab.setTextColor(getColor(R.color.black))
-        selectedTab.setBackgroundColor(getColor(R.color.gym_surface_white))
+        selectedTab.setBackgroundResource(R.drawable.bg_tab_selected_white)
     }
 
+    // Carga un fragmento en el contenedor principal
     private fun loadFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragmentContainer, fragment)
             .commit()
+    }
+
+    // Muestra un dialogo con opciones de contacto (email e instagram)
+    private fun mostrarDialogoContactos() {
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_contactos, null)
+
+        AlertDialog.Builder(this)
+            .setView(dialogView)
+            .create()
+            .show()
+
+        dialogView.findViewById<TextView>(R.id.tvEmail1).setOnClickListener {
+            val intent = Intent(Intent.ACTION_SENDTO).apply {
+                data = android.net.Uri.parse("mailto:jaime.de.luengo.al@iespoligonosur.org")
+            }
+            startActivity(intent)
+        }
+
+        dialogView.findViewById<TextView>(R.id.tvEmail2).setOnClickListener {
+            val intent = Intent(Intent.ACTION_SENDTO).apply {
+                data = android.net.Uri.parse("mailto:gabriel.santos.palomino.al@iespoligonosur.org")
+            }
+            startActivity(intent)
+        }
+
+        dialogView.findViewById<TextView>(R.id.tvInstagramUser1).setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW).apply {
+                data = android.net.Uri.parse("https://instagram.com/jaimeeesantoss")
+            }
+            startActivity(intent)
+        }
+
+        dialogView.findViewById<TextView>(R.id.tvInstagramUser2).setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW).apply {
+                data = android.net.Uri.parse("https://instagram.com/gabriel_angelsp")
+            }
+            startActivity(intent)
+        }
     }
 }

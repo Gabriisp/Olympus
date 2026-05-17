@@ -1,5 +1,6 @@
 package com.example.olympus
 
+// Adapter para mostrar la lista de profesionales
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,6 +36,7 @@ class ProfessionalsAdapter(
 
     override fun getItemCount(): Int = professionals.size
 
+    // Actualiza la lista de profesionales
     fun updateData(newProfessionals: List<UserProfile>) {
         professionals = newProfessionals
         notifyDataSetChanged()

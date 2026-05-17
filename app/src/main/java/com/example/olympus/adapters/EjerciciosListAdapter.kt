@@ -1,5 +1,6 @@
 package com.example.olympus
 
+// Adapter para mostrar una lista de ejercicios
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,6 +36,7 @@ class EjerciciosListAdapter(
 
     override fun getItemCount() = ejercicios.size
 
+    // Actualiza la lista de ejercicios
     fun updateList(newList: List<Ejercicio>) {
         ejercicios = newList
         notifyDataSetChanged()
