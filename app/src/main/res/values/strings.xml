@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Olympus</string>
-    <string name="login_brand_title">Olympus GYM</string>
+    <string name="login_brand_title">OLYMPUS</string>
     <string name="login_brand_subtitle">Tu compañero de entrenamiento definitivo</string>
     <string name="login_panel_title">Bienvenido</string>
     <string name="login_panel_subtitle">Accede a tu cuenta o crea una nueva</string>

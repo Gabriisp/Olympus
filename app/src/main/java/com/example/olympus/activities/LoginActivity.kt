@@ -1,14 +1,20 @@
 package com.example.olympus
 
+// Pantalla de inicio de sesion con email/password
+// Permite a los usuarios autenticarse o solicitar ser profesionales
+
 import android.content.Intent
 import android.os.Bundle
+import android.app.Dialog
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.AppCompatButton
 import com.google.android.material.textfield.TextInputEditText
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.example.olympus.utils.SessionManager
 
 class LoginActivity : AppCompatActivity() {
 
@@ -33,18 +39,19 @@ class LoginActivity : AppCompatActivity() {
         val btnLogin = findViewById<Button>(R.id.btnLogin)
         val btnRegister = findViewById<Button>(R.id.btnRegister)
         val tvForgotPassword = findViewById<TextView>(R.id.tvForgotPassword)
-        val fabProfessionalRequest = findViewById<FloatingActionButton>(R.id.fabProfessionalRequest)
+        val btnProfessionalRequest = findViewById<ImageButton>(R.id.btnProfessionalRequest)
 
         btnLogin.setOnClickListener { loginUser() }
         btnRegister.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
         tvForgotPassword.setOnClickListener { showResetPasswordDialog() }
-        fabProfessionalRequest.setOnClickListener {
+        btnProfessionalRequest.setOnClickListener {
             startActivity(Intent(this, RoleRequestActivity::class.java))
         }
     }
 
+    // Autentica al usuario con email y password, guarda sesion y redirige segun rol
     private fun loginUser() {
         val email = etEmail.text.toString().trim()
         val password = etPassword.text.toString().trim()
@@ -56,7 +63,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         if (password.isEmpty()) {
-            etPassword.error = "Ingresa tu contraseña"
+            etPassword.error = "Ingresa tu contrasena"
             etPassword.requestFocus()
             return
         }
@@ -65,19 +72,16 @@ class LoginActivity : AppCompatActivity() {
             runOnUiThread {
                 result.onSuccess { profile ->
                     sessionManager.saveUserSession(profile)
-                    Toast.makeText(this, "Bienvenido, ${profile.name}", Toast.LENGTH_SHORT).show()
+                    showToast("Bienvenido, ${profile.name}")
                     redirectToRoleActivity()
                 }.onFailure { error ->
-                    Toast.makeText(
-                        this,
-                        error.message ?: "No se pudo iniciar sesión",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    showToast(error.message ?: "No se pudo iniciar sesion")
                 }
             }
         }
     }
 
+    // Redirige al usuario a la pantalla correspondiente segun su rol
     private fun redirectToRoleActivity() {
         val role = sessionManager.getUserRole()
         val intent = when (role) {
@@ -85,7 +89,7 @@ class LoginActivity : AppCompatActivity() {
             "Entrenador" -> Intent(this, EntrenadorActivity::class.java)
             "Nutricionista" -> Intent(this, NutricionistaActivity::class.java)
             else -> {
-                Toast.makeText(this, "Rol no reconocido", Toast.LENGTH_SHORT).show()
+                showToast("Rol no reconocido")
                 return
             }
         }
@@ -93,45 +97,45 @@ class LoginActivity : AppCompatActivity() {
         finish()
     }
 
+    // Muestra un dialogo para recuperar la contrasena via email
     private fun showResetPasswordDialog() {
-        val emailInput = TextInputEditText(this)
-        emailInput.setText(etEmail.text?.toString()?.trim().orEmpty())
-        emailInput.hint = getString(R.string.email_label)
+        val dialogView = layoutInflater.inflate(R.layout.dialog_recuperar_contrasena, null)
+        val etEmailRecuperar = dialogView.findViewById<TextInputEditText>(R.id.etEmailRecuperar)
+        val btnCancelarRecuperar = dialogView.findViewById<AppCompatButton>(R.id.btnCancelarRecuperar)
+        val btnEnviarRecuperar = dialogView.findViewById<AppCompatButton>(R.id.btnEnviarRecuperar)
 
-        val dialog = AlertDialog.Builder(this)
-            .setTitle(getString(R.string.login_forgot_password))
-            .setMessage("Te enviaremos un correo para restablecer tu contraseña.")
-            .setView(emailInput)
-            .setPositiveButton("Enviar", null)
-            .setNegativeButton("Cancelar", null)
-            .show()
+        etEmailRecuperar.setText(etEmail.text?.toString()?.trim().orEmpty())
 
-        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
-            val email = emailInput.text.toString().trim()
+        val dialog = Dialog(this)
+        dialog.setContentView(dialogView)
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        val width = (resources.displayMetrics.widthPixels * 0.85).toInt()
+        dialog.window?.setLayout(width, android.view.ViewGroup.LayoutParams.WRAP_CONTENT)
+
+        btnCancelarRecuperar.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        btnEnviarRecuperar.setOnClickListener {
+            val email = etEmailRecuperar.text.toString().trim()
             if (!android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-                emailInput.error = "Ingresa un email válido"
-                emailInput.requestFocus()
+                etEmailRecuperar.error = "Ingresa un email válido"
+                etEmailRecuperar.requestFocus()
                 return@setOnClickListener
             }
 
             firebaseRepository.sendPasswordResetEmail(email) { result ->
                 runOnUiThread {
                     result.onSuccess {
-                        Toast.makeText(
-                            this,
-                            "Correo de recuperación enviado",
-                            Toast.LENGTH_LONG
-                        ).show()
+                        showToast("Correo de recuperación enviado", Toast.LENGTH_LONG)
                         dialog.dismiss()
                     }.onFailure { error ->
-                        Toast.makeText(
-                            this,
-                            error.message ?: "No se pudo enviar el correo",
-                            Toast.LENGTH_LONG
-                        ).show()
+                        showToast(error.message ?: "No se pudo enviar el correo", Toast.LENGTH_LONG)
                     }
                 }
             }
         }
+
+        dialog.show()
     }
 }

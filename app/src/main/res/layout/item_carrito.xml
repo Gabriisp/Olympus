@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="12dp"
+    android:layout_marginVertical="4dp"
+    android:background="@drawable/bg_card"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:padding="12dp">
+
+    <ImageView
+        android:id="@+id/ivArticuloCarrito"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_tienda_placeholder"
+        android:contentDescription="Imagen"/>
+
+    <TextView
+        android:id="@+id/tvNombreArticuloCarrito"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="8dp"
+        android:text="Nombre"
+        android:textColor="@color/gym_text_primary"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:id="@+id/tvCantidadCarrito"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="x1"
+        android:textColor="@color/gym_text_secondary"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:id="@+id/tvSubtotalCarrito"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:minWidth="80dp"
+        android:gravity="end"
+        android:text="0.00€"
+        android:textColor="@color/gym_accent"
+        android:textSize="14sp"
+        android:textStyle="bold"/>
+
+    <Button
+        android:id="@+id/btnQuitarCarrito"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:layout_marginStart="4dp"
+        android:background="@drawable/bg_button_secondary"
+        android:padding="0dp"
+        android:text="X"
+        android:textColor="@color/gym_error"
+        android:textSize="12sp"/>
+
+</LinearLayout>

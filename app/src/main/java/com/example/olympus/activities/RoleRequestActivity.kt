@@ -1,5 +1,8 @@
 package com.example.olympus
 
+// Pantalla para que un usuario solicite un rol de profesional (Entrenador o Nutricionista)
+// Envia la solicitud a Firebase y notifica al administrador por email
+
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
@@ -31,7 +34,7 @@ class RoleRequestActivity : AppCompatActivity() {
 
         val roleAdapter = ArrayAdapter(
             this,
-            android.R.layout.simple_dropdown_item_1line,
+            R.layout.item_dropdown_white,
             arrayOf("Entrenador", "Nutricionista")
         )
         actvRequestedRole.setAdapter(roleAdapter)
@@ -39,6 +42,7 @@ class RoleRequestActivity : AppCompatActivity() {
         btnSubmit.setOnClickListener { submitRequest() }
     }
 
+    // Valida los campos y envia la solicitud de rol profesional
     private fun submitRequest() {
         val fullName = etName.text.toString().trim()
         val email = etEmail.text.toString().trim()
@@ -53,17 +57,17 @@ class RoleRequestActivity : AppCompatActivity() {
                 return
             }
             email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() -> {
-                etEmail.error = "Ingresa un email válido"
+                etEmail.error = "Ingresa un email valido"
                 etEmail.requestFocus()
                 return
             }
             phone.isEmpty() -> {
-                etPhone.error = "Ingresa tu teléfono"
+                etPhone.error = "Ingresa tu telefono"
                 etPhone.requestFocus()
                 return
             }
             requestedRole !in listOf("Entrenador", "Nutricionista") -> {
-                Toast.makeText(this, "Selecciona el rol solicitado", Toast.LENGTH_SHORT).show()
+                showToast("Selecciona el rol solicitado")
                 return
             }
             details.isEmpty() -> {
@@ -85,18 +89,10 @@ class RoleRequestActivity : AppCompatActivity() {
             runOnUiThread {
                 btnSubmit.isEnabled = true
                 result.onSuccess {
-                    Toast.makeText(
-                        this,
-                        "Solicitud enviada correctamente. El administrador la recibira por correo.",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    showToast("Solicitud enviada correctamente. El administrador la recibira por correo.", Toast.LENGTH_LONG)
                     finish()
                 }.onFailure { error ->
-                    Toast.makeText(
-                        this,
-                        error.message ?: "No se pudo enviar la solicitud",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    showToast(error.message ?: "No se pudo enviar la solicitud", Toast.LENGTH_LONG)
                 }
             }
         }

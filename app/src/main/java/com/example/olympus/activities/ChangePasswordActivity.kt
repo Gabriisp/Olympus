@@ -1,5 +1,6 @@
 package com.example.olympus
 
+// Activity para cambiar la contrasena del usuario actual
 import android.os.Bundle
 import android.widget.Button
 import android.widget.Toast
@@ -26,6 +27,7 @@ class ChangePasswordActivity : AppCompatActivity() {
         btnSavePassword.setOnClickListener { changePassword() }
     }
 
+    // Valida y actualiza la contrasena del usuario en Firebase
     private fun changePassword() {
         val currentPassword = etCurrentPassword.text.toString().trim()
         val newPassword = etNewPassword.text.toString().trim()
@@ -54,18 +56,10 @@ class ChangePasswordActivity : AppCompatActivity() {
             runOnUiThread {
                 btnSavePassword.isEnabled = true
                 result.onSuccess {
-                    Toast.makeText(
-                        this,
-                        "Contraseña actualizada correctamente",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    showToast("Contraseña actualizada correctamente", Toast.LENGTH_LONG)
                     finish()
                 }.onFailure { error ->
-                    Toast.makeText(
-                        this,
-                        error.message ?: "No se pudo actualizar la contraseña",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    showToast(error.message ?: "No se pudo actualizar la contraseña", Toast.LENGTH_LONG)
                 }
             }
         }
